@@ -191,7 +191,7 @@ export default {
       this.bffColumnsData = [];
       let investment = parseInt(this.BffType.initialInvestment);
 
-      for (let day = 1; day <= 28; day++) {
+      for (let day = 1; day <= 84; day++) {
         this.bffColumnsData.push({
           day,
           investment: Math.round(investment * 1000) / 1000,
@@ -210,11 +210,13 @@ export default {
                 )
               : null,
         });
-        investment =
-          this.calculatePercentage(
-            parseInt(this.BffType.dailtReturns),
-            investment
-          ) + investment;
+        if (day % 7 !== 0) {
+          investment =
+            this.calculatePercentage(
+              parseInt(this.BffType.dailtReturns),
+              investment
+            ) + investment;
+        }
       }
       this.bffColumnsData.forEach((row) => {
         if (row.takeout) {
