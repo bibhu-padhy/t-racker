@@ -1,12 +1,12 @@
 <template>
   <q-page class="row justify-center">
-    <div class="q-mt-lg col-6">
-      <q-input
+    <div class="q-mt-lg col-sm-6 col-xs-10">
+      <!-- <q-input
         v-model="projectName"
         type="text"
         label="Project Name"
         outlined
-      />
+      /> -->
       <q-select
         class="q-mt-sm"
         outlined
@@ -191,12 +191,7 @@ export default {
       this.bffColumnsData = [];
       let investment = parseInt(this.BffType.initialInvestment);
 
-      for (let day = 1; day <= 84; day++) {
-        investment =
-          this.calculatePercentage(
-            parseInt(this.BffType.dailtReturns),
-            investment
-          ) + investment;
+      for (let day = 1; day <= 28; day++) {
         this.bffColumnsData.push({
           day,
           investment: Math.round(investment * 1000) / 1000,
@@ -215,6 +210,11 @@ export default {
                 )
               : null,
         });
+        investment =
+          this.calculatePercentage(
+            parseInt(this.BffType.dailtReturns),
+            investment
+          ) + investment;
       }
       this.bffColumnsData.forEach((row) => {
         if (row.takeout) {
