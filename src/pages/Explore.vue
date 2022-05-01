@@ -69,7 +69,11 @@
           :columns="columns"
           :rows="columnsData"
           row-key="day"
-        />
+        >
+          <template v-slot:top>
+            Total Investment = {{ NodeType.totalInvestment }}
+          </template>
+        </q-table>
       </div>
       <div v-if="projectType === 'BBF'">
         <q-input
@@ -102,6 +106,41 @@
           <template v-slot:top> Total profit = {{ bffTotalProfit }} </template>
         </q-table>
       </div>
+      <div v-if="projectType === 'MDTF'">
+        <q-input
+          class="q-mt-sm"
+          v-model="DailyRoiType.initialInvestment"
+          type="number"
+          label="Initial Investment"
+          outlined
+        />
+        <q-input
+          class="q-mt-sm"
+          v-model="DailyRoiType.percentage"
+          type="number"
+          label="Daily Percentages"
+          outlined
+        />
+        <q-btn
+          class="q-mt-sm"
+          color="primary"
+          label="Submit"
+          @click="calculateDailyPercentage"
+        />
+        <q-table
+          class="q-mt-xl"
+          :pagination="initialPagination"
+          :rows="dailyReturnsData"
+          :columns="columns"
+          row-key="name"
+        >
+          <template v-slot:top>
+            On 90th days your initial investment will be
+            {{ DailyRoiType.totalROI }} and you will be getting
+            {{ DailyRoiType.totalPercentage }}
+          </template>
+        </q-table>
+      </div>
     </div>
   </q-page>
 </template>
@@ -123,10 +162,17 @@ export default {
         NodeCount: "",
         dailyReturns: "",
         tokenPrice: "",
+        totalInvestment: "",
       },
       BffType: {
         initialInvestment: "",
         dailtReturns: "",
+      },
+      DailyRoiType: {
+        initialInvestment: "",
+        percentage: "",
+        totalROI: "",
+        totalPercentage: "",
       },
       columns: [
         {
@@ -134,6 +180,12 @@ export default {
           label: "Days",
           align: "center",
           field: "day",
+        },
+        {
+          name: "total",
+          align: "center",
+          label: "Total",
+          field: "total",
         },
         {
           name: "returns",
@@ -170,6 +222,7 @@ export default {
         },
       ],
       bffColumnsData: [],
+      dailyReturnsData: [],
       bffTotalProfit: "",
     };
   },
@@ -181,11 +234,32 @@ export default {
         dailyReturns: "",
         tokenPrice: "",
       };
+      this.BffType = {};
     },
     calculatePercentage(percentage, number) {
       const percent = percentage / 100;
 
       return Math.round(percent * number * 100) / 100;
+    },
+    calculateDailyPercentage() {
+      const { percentage, initialInvestment } = this.DailyRoiType;
+
+      this.dailyReturnsData = [];
+      let investment = parseInt(initialInvestment);
+      for (let day = 1; day <= 45; day++) {
+        this.dailyReturnsData.push({
+          day,
+          total: investment,
+          returns: this.calculatePercentage(percentage, investment),
+        });
+        investment = Math.round(
+          this.calculatePercentage(percentage, investment) + investment
+        );
+      }
+      this.DailyRoiType.totalPercentage = Math.round(
+        this.calculatePercentage(percentage, investment)
+      );
+      this.DailyRoiType.totalROI = Math.round(investment);
     },
     handleBBF() {
       this.bffColumnsData = [];
@@ -228,13 +302,19 @@ export default {
     },
     handleNodeType() {
       this.columnsData = [];
+      this.NodeType.totalInvestment = "";
       const dailyTotalReturns = this.calculatePercentage(
         this.NodeType.dailyReturns,
         this.NodeType.NodeCount * this.NodeType.tokenCount
       );
-      for (let day = 1; day <= 100; day++) {
+      this.NodeType.totalInvestment =
+        this.NodeType.tokenCount *
+        this.NodeType.NodeCount *
+        this.NodeType.tokenPrice;
+      for (let day = 1; day <= 90; day++) {
         this.columnsData.push({
           day,
+
           returns: day * dailyTotalReturns * this.NodeType.tokenPrice,
         });
       }
