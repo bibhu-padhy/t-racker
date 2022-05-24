@@ -1,7 +1,6 @@
-import { boot } from "quasar/wrappers";
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useUsersStore } from "../store";
 const firebaseConfig = {
   apiKey: "AIzaSyAiLISjwX0tMFO9vkh2MNoLGcOIn-WrRok",
   authDomain: "t-racker.firebaseapp.com",
@@ -14,7 +13,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+export const firebaseAuth = getAuth();
 
-export default boot(async (/* { app, router, ... } */) => {
-  // something to do
+onAuthStateChanged(firebaseAuth, (user) => {
+  console.log(user);
+  const userStore = useUsersStore();
+  if (user) {
+    userStore.setUser(user);
+  } else {
+    userStore.$reset();
+  }
 });

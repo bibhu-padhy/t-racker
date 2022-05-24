@@ -11,7 +11,10 @@ const routes = [
         component: () => import("pages/Explore.vue"),
       },
     ],
-    redirect: "/explore",
+  },
+  {
+    path: "/auth",
+    component: () => import("pages/Auth.vue"),
   },
 ];
 
