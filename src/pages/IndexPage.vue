@@ -15,9 +15,10 @@
               <div class="text-subtitle1 q-mt-md q-mb-xs">
                 {{ userStore.displayName }}
               </div>
-
+              <q-btn size="sm" class="q-my-sm" @click="router.push('/explore')">
+                Calculator
+              </q-btn>
               <q-btn
-                color="primary"
                 label="Logout"
                 push
                 size="sm"
@@ -127,6 +128,7 @@ let projectFormValue = reactive({
   dailyApr: "1",
   currentValue: "",
 });
+
 const openModal = () => {
   isFormDialog.value = true;
 };
