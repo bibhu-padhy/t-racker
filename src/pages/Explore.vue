@@ -1,13 +1,7 @@
 <template>
   <q-page class="row justify-center">
     <div class="q-mt-lg col-sm-6 col-xs-10">
-      <!-- <q-input
-        v-model="projectName"
-        type="text"
-        label="Project Name"
-        outlined
-      /> -->
-      <q-select
+      <!-- <q-select
         class="q-mt-sm"
         outlined
         v-model="projectType"
@@ -140,17 +134,20 @@
             {{ DailyRoiType.totalPercentage }}
           </template>
         </q-table>
-      </div>
+      </div> -->
+
+      <AprCalculator />
     </div>
   </q-page>
 </template>
 <script>
+import AprCalculator from "../components/AprCalculator.vue";
 export default {
   data() {
     return {
       projectName: "",
       projectType: "",
-      projectTypeOptions: ["Node", "BBF", "MDTF"],
+      projectTypeOptions: ["Node", "BBF", "MDTF", "APR"],
       initialPagination: {
         sortBy: "desc",
         descending: false,
@@ -226,6 +223,7 @@ export default {
       bffTotalProfit: "",
     };
   },
+  components: { AprCalculator },
   methods: {
     handleProjectType(e) {
       this.NodeType = {
