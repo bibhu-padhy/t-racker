@@ -4,14 +4,15 @@
       <q-btn @click="openModal" flat>
         <q-icon name="add" />
       </q-btn>
-      <q-btn color="primary" icon="menu" flat>
+      <q-btn color="primary" flat>
+        <q-icon>
+          <q-avatar size="40px">
+            <img :src="userStore.photoURL" />
+          </q-avatar>
+        </q-icon>
         <q-menu>
           <div class="row no-wrap q-pa-md">
             <div class="column items-center">
-              <q-avatar size="72px">
-                <img :src="userStore.photoURL" />
-              </q-avatar>
-
               <div class="text-subtitle1 q-mt-md q-mb-xs">
                 {{ userStore.displayName }}
               </div>
@@ -37,40 +38,7 @@
         persistent
         v-model="isFormDialog"
       >
-        <q-card style="width: 450px" class="q-mt-sm">
-          <q-card-section class="row items-center">
-            <div>Add Projects</div>
-            <q-space />
-            <q-btn flat v-close-popup round dense icon="close" />
-          </q-card-section>
-          <q-card-section>
-            <q-input label="Name" v-model="projectFormValue.name" />
-            <div class="row">
-              <div class="col">
-                <q-input
-                  label="Investment"
-                  v-model="projectFormValue.investment"
-                />
-              </div>
-              <div class="col q-ml-sm">
-                <q-input
-                  label="Daily APR"
-                  v-model="projectFormValue.dailyApr"
-                />
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-actions class="row items-center">
-            <q-btn v-close-popup label="cancel" flat />
-            <q-space />
-            <q-btn
-              v-close-popup
-              label="Submit"
-              @click="submit"
-              color="primary"
-            />
-          </q-card-actions>
-        </q-card>
+        <AddProjectDialog />
       </q-dialog>
     </div>
     <div class="container">
@@ -94,14 +62,17 @@
         <q-card-section>
           <div class="row">
             <div class="col-5">
-              <div>Investment= $1000</div>
-              <div>Current = $ 800</div>
-              <div>= $ 200</div>
+              <div>Invested= ${{ selectedProject.investment }}</div>
+              <div>Current = ${{ selectedProject.currentValue }}</div>
+              <div>
+                Total PnL= $
+                {{ selectedProject.investment - selectedProject.currentValue }}
+              </div>
             </div>
             <div class="col-7">
               <div class="row justify-between items-center">
-                <div class="text-h6">Daily Returns -%0.7</div>
-                <a>Generate Report</a>
+                <div class="text-h6">APR: {{ selectedProject.currentApr }}</div>
+                <q-btn>Generate Report</q-btn>
               </div>
             </div>
           </div>
@@ -113,20 +84,27 @@
 <script setup>
 import ProjectList from "../components/ProjectList.vue";
 import { useUsersStore } from "../store";
-import { reactive, ref } from "vue";
+import { ref, onMounted } from "vue";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
+
+// components
+import AddProjectDialog from "../components/AddProjectDialog.vue";
+
+// composables
+import { useAddProjectMethods } from "../composables/useAddProjectMethods";
+
+const { getProjetList, projectsList } = useAddProjectMethods();
 const userStore = useUsersStore();
+
 const router = useRouter();
 let isFormDialog = ref(false);
 let isDetailsDialog = ref(false);
-let projectsList = ref([]);
+
 let dialogRef = ref(null);
-let projectFormValue = reactive({
-  name: "Demo",
-  investment: "100",
-  dailyApr: "1",
-  currentValue: "",
+let selectedProject = ref({});
+onMounted(async () => {
+  await getProjetList();
 });
 
 const openModal = () => {
@@ -137,11 +115,10 @@ const logout = async () => {
   await signOut(auth);
   router.push("/auth");
 };
-const submit = () => {
-  projectsList.value.push(projectFormValue);
-};
-const showDetailsDialog = () => {
+
+const showDetailsDialog = (item) => {
   isDetailsDialog.value = true;
+  selectedProject.value = item;
 };
 </script>
 

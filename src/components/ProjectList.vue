@@ -1,9 +1,10 @@
 <template>
   <q-list
-    @click="handleShowDetails"
+    @click="handleShowDetails(item)"
     bordered
     separator
-    v-for="item of projectList"
+    v-for="(item, index) of projectList"
+    :key="index"
     class="q-mt-sm"
   >
     <q-item class="items-center row justify-between text-weight-medium">
@@ -24,8 +25,8 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(["showDetails"]);
-const handleShowDetails = () => {
-  emits("showDetails");
+const handleShowDetails = (item) => {
+  emits("showDetails", item);
 };
 </script>
 <style></style>

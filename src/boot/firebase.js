@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useUsersStore } from "../store";
+import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyAiLISjwX0tMFO9vkh2MNoLGcOIn-WrRok",
   authDomain: "t-racker.firebaseapp.com",
@@ -14,9 +15,9 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth();
+export const db = getFirestore(app);
 
 onAuthStateChanged(firebaseAuth, (user) => {
-  console.log(user);
   const userStore = useUsersStore();
   if (user) {
     userStore.setUser(user);
