@@ -6,7 +6,7 @@
         <q-input
           label="APR"
           type="number"
-          v-model="aprValue"
+          v-model="formValue.aprValue"
           outlined
         ></q-input>
       </div>
@@ -16,7 +16,7 @@
           label="Investment"
           type="number"
           outlined
-          v-model="investment"
+          v-model="formValue.investment"
         />
       </div>
     </div>
@@ -24,51 +24,34 @@
       Daily percentage: {{ dailyPercentageOnApr }}%
     </div>
 
-    <div class="text-h6 q-my-md" v-if="dailyPercentageOnApr > 0 && investment">
-      Daily gain on {{ investment }} of {{ dailyPercentageOnApr }}% is
+    <div
+      class="text-h6 q-my-md"
+      v-if="dailyPercentageOnApr > 0 && formValue.investment"
+    >
+      Daily gain on {{ formValue.investment }} of {{ dailyPercentageOnApr }}% is
       {{ gain }}
     </div>
-    <div v-if="dailyPercentageOnApr > 0 && investment">
+    <div v-if="dailyPercentageOnApr > 0 && formValue.investment">
       <q-btn @click="showWeekResult">Show 4 weeks result</q-btn>
-      <div class="text-h6" v-for="(count, index) of weeksResults" :key="index">
+      <div
+        class="text-h6"
+        v-for="(count, index) of formValue.weeksResults"
+        :key="index"
+      >
         <div>Week-{{ index + 1 }} = {{ count }}</div>
       </div>
-      <div v-if="weeksResults.length" class="text-h6">
+      <div v-if="formValue.weeksResults.length" class="text-h6">
         Total = {{ totalGain }}
       </div>
+      <q-checkbox v-model="right" label="" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-const aprValue = ref("");
-const investment = ref("");
-const weeksResults = ref([]);
-
-// computed
-const dailyPercentageOnApr = computed(() => {
-  const result = +aprValue.value / 365;
-  return Math.round(result * 100) / 100;
-});
-const gain = computed(() => {
-  const percent = dailyPercentageOnApr.value / 100;
-  return Math.round(percent * showTwoDesimal(investment.value) * 100) / 100;
-});
-
-const totalGain = computed(() =>
-  weeksResults.value.reduce((acc, current) => acc + current, 0)
-);
-
-// methods
-const showWeekResult = () => {
-  weeksResults.value = [];
-  for (let week = 1; week <= 4; week++) {
-    weeksResults.value.push(showTwoDesimal(gain.value * (7 * week)));
-  }
-};
-
-const showTwoDesimal = (num) => (parseInt(num) * 100) / 100;
+import { useAprCalculatorMethods } from "../composables/useAprCalculatorMethods";
+const { formValue, dailyPercentageOnApr, totalGain, gain, showWeekResult } =
+  useAprCalculatorMethods();
 </script>
 
 <style></style>
