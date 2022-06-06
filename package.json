@@ -6,7 +6,8 @@
   "author": "bibhu-padhy <bibhupadhy140@gmail.com>",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "publish": "quasar build && firebase deploy --only hosting"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",

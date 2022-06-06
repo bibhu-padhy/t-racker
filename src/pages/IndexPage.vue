@@ -26,7 +26,7 @@
                 v-close-popup
                 @click="logout"
               />
-              <span class="q-mt-sm text-grey"> V-0.0.3 </span>
+              <span class="q-mt-sm text-grey"> V- 0.0.4 </span>
             </div>
           </div>
         </q-menu>
