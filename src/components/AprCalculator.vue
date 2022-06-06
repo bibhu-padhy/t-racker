@@ -29,29 +29,70 @@
       v-if="dailyPercentageOnApr > 0 && formValue.investment"
     >
       Daily gain on {{ formValue.investment }} of {{ dailyPercentageOnApr }}% is
-      {{ gain }}
+      {{ dailyGain }}
     </div>
     <div v-if="dailyPercentageOnApr > 0 && formValue.investment">
-      <q-btn @click="showWeekResult">Show 4 weeks result</q-btn>
-      <div
-        class="text-h6"
-        v-for="(count, index) of formValue.weeksResults"
-        :key="index"
-      >
-        <div>Week-{{ index + 1 }} = {{ count }}</div>
+      <div class="row">
+        <q-btn @click="showWeekResult">Show 4 weeks result</q-btn>
+        <q-checkbox
+          @click="handleCompound"
+          v-model="formValue.isCompound"
+          label="compound your returns for"
+        />
+        <q-input
+          hide-bottom-space
+          type="number"
+          @change="handleCompound"
+          v-if="formValue.isCompound"
+          class="q-ml-lg"
+          v-model="formValue.selectedWeek"
+        />
       </div>
-      <div v-if="formValue.weeksResults.length" class="text-h6">
-        Total = {{ totalGain }}
+      <div v-if="!formValue.isCompound">
+        <div
+          class="text-h6"
+          v-for="(count, index) of formValue.weeksResults"
+          :key="index"
+        >
+          <div>Week-{{ index + 1 }} = {{ count }}</div>
+        </div>
+        <div v-if="formValue.weeksResults.length" class="text-h6">
+          Total = {{ totalGain }}
+        </div>
       </div>
-      <q-checkbox v-model="right" label="" />
+
+      <div v-else>
+        <div
+          class="text-h6"
+          v-for="(count, index) of formValue.compoundedValues"
+          :key="index"
+        >
+          <div>
+            Day-{{ index + 1 }} = {{ count.investment }} -------- Gain =
+            {{ count.dailyGain }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useAprCalculatorMethods } from "../composables/useAprCalculatorMethods";
-const { formValue, dailyPercentageOnApr, totalGain, gain, showWeekResult } =
-  useAprCalculatorMethods();
+const {
+  formValue,
+  dailyPercentageOnApr,
+  totalGain,
+  dailyGain,
+  showWeekResult,
+  compoundedValue,
+} = useAprCalculatorMethods();
+
+const handleCompound = (e) => {
+  if (formValue.isCompound) {
+    compoundedValue();
+  }
+};
 </script>
 
 <style></style>
