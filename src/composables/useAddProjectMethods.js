@@ -8,7 +8,6 @@ export const useAddProjectMethods = () => {
   const projectFormValue = reactive({
     name: "",
     investment: "",
-    currentApr: "",
   });
   const projectSubmit = async () => {
     await addDoc(collection(db, collectionName), {
@@ -20,7 +19,11 @@ export const useAddProjectMethods = () => {
   };
   const getProjetList = async () => {
     try {
-      Loading.show();
+      Loading.show({
+        message: "Fetching assets..",
+        messageColor: "black",
+        backgroundColor: "grey",
+      });
       const projecctListRef = await getDocs(collection(db, collectionName));
       projectsList.value = projecctListRef.docs.map((doc) => ({
         ...doc.data(),

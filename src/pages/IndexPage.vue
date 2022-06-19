@@ -83,7 +83,7 @@
   </div>
 </template>
 <script setup>
-import ProjectList from "../components/ProjectList.vue";
+import ProjectList from "../components/Home/ProjectList.vue";
 import { useUsersStore } from "../store";
 import { ref, onMounted } from "vue";
 import { getAuth, signOut } from "firebase/auth";

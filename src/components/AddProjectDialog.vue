@@ -9,12 +9,6 @@
       <q-card-section>
         <q-input label="Name" outlined v-model="projectFormValue.name" />
         <q-input
-          label="Current APR"
-          outlined
-          v-model="projectFormValue.currentApr"
-          class="q-my-sm"
-        />
-        <q-input
           outlined
           type="number"
           label="Investment"
