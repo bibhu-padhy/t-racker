@@ -17,15 +17,15 @@ export const useAddProjectMethods = () => {
       currentValue: projectFormValue.investment,
     });
   };
-  const getProjetList = async () => {
+  const getProjectList = async () => {
     try {
       Loading.show({
         message: "Fetching assets..",
         messageColor: "black",
         backgroundColor: "grey",
       });
-      const projecctListRef = await getDocs(collection(db, collectionName));
-      projectsList.value = projecctListRef.docs.map((doc) => ({
+      const projectListRef = await getDocs(collection(db, collectionName));
+      projectsList.value = projectListRef.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
@@ -34,5 +34,5 @@ export const useAddProjectMethods = () => {
       Loading.hide();
     }
   };
-  return { projectsList, projectFormValue, projectSubmit, getProjetList };
+  return { projectsList, projectFormValue, projectSubmit, getProjectList };
 };

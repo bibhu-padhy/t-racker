@@ -2,13 +2,15 @@ import { defineStore } from "pinia";
 import state from "./state";
 
 const useUsersStore = defineStore("user", {
-  state,
+  state: () => {
+    return {
+      currentUser: null,
+    };
+  },
+
   actions: {
-    setUser(user) {
-      this.displayName = user.displayName;
-      this.email = user.email;
-      this.uid = user.uid;
-      this.photoURL = user.photoURL;
+    setCurrentUser(user) {
+      this.currentUser = user;
     },
   },
 });

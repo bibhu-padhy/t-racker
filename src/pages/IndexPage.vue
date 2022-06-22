@@ -50,10 +50,10 @@
         <div>Name</div>
         <div>Investment</div>
       </div>
-      <ProjectList
+      <!-- <ProjectList
         :projectList="projectsList"
         @showDetails="showDetailsDialog"
-      />
+      /> -->
     </div>
     <q-dialog v-model="isDetailsDialog">
       <q-card style="width: 768px">
@@ -95,7 +95,7 @@ import AddProjectDialog from "../components/AddProjectDialog.vue";
 // composables
 import { useAddProjectMethods } from "../composables/useAddProjectMethods";
 
-const { getProjetList, projectsList } = useAddProjectMethods();
+// const { getProjetList, projectsList } = useAddProjectMethods();
 const userStore = useUsersStore();
 
 const router = useRouter();

@@ -16,7 +16,7 @@
           <div class="q-mt-md">
             <div
               @click="showDetails(item)"
-              v-for="(item, index) of projectsList"
+              v-for="(item, index) of assetsList"
               :key="index"
               class="row items-center q-mb-sm q-pl-sm cursor-pointer"
               style="border: 1px solid black; height: 50px; border-radius: 5px"
@@ -35,18 +35,23 @@
 
 <script setup>
 // composables
+import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
-import { useAddProjectMethods } from "../composables/useAddProjectMethods";
 import { useRouter } from "vue-router";
+import { useAssetsStore } from "../store";
+const assetsStore = useAssetsStore();
+const { getAssetsList, getAssetsById, getClaims } = assetsStore;
+const { assetsList } = storeToRefs(assetsStore);
 const router = useRouter();
-const { getProjetList, projectsList } = useAddProjectMethods();
 
 onMounted(async () => {
-  await getProjetList();
+  await getAssetsList();
 });
 
-const showDetails = (item) => {
+const showDetails = async (item) => {
   router.push(`/${item.id}`);
+  getAssetsById(item.id);
+  await getClaims(item.id);
 };
 </script>
 
