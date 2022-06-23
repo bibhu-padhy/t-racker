@@ -5,11 +5,12 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
-        path: "dashboard",
+        path: "/dashboard",
+        name: "dashboard",
         component: () => import("../pages/HomePage.vue"),
         children: [
           {
-            path: "/:id",
+            path: "/dashboard/:id",
             component: () => import("../pages/AssetsDetailsPage.vue"),
           },
         ],
@@ -24,6 +25,7 @@ const routes = [
   },
   {
     path: "/auth",
+    name: "auth",
     component: () => import("pages/Auth.vue"),
   },
 ];

@@ -42,7 +42,7 @@
         <AddProjectDialog />
       </q-dialog>
     </div>
-    <div class="container">
+    <!-- <div class="container">
       <div
         v-if="projectsList.length"
         class="row items-center justify-between q-px-sm text-weight-bold"
@@ -50,11 +50,11 @@
         <div>Name</div>
         <div>Investment</div>
       </div>
-      <!-- <ProjectList
+      <ProjectList
         :projectList="projectsList"
         @showDetails="showDetailsDialog"
-      /> -->
-    </div>
+      />
+    </div> -->
     <q-dialog v-model="isDetailsDialog">
       <q-card style="width: 768px">
         <div class="text-center text-weight-bold text-h6">EMP-ETH</div>
@@ -92,10 +92,7 @@ import { useRouter } from "vue-router";
 // components
 import AddProjectDialog from "../components/AddProjectDialog.vue";
 
-// composables
-import { useAddProjectMethods } from "../composables/useAddProjectMethods";
 
-// const { getProjetList, projectsList } = useAddProjectMethods();
 const userStore = useUsersStore();
 
 const router = useRouter();
@@ -104,9 +101,6 @@ let isDetailsDialog = ref(false);
 
 let dialogRef = ref(null);
 let selectedProject = ref({});
-onMounted(async () => {
-  await getProjetList();
-});
 
 const openModal = () => {
   isFormDialog.value = true;
