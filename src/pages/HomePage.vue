@@ -8,7 +8,7 @@
         >
           <div class="row justify-between items-center">
             <div class="q-gutter-x-sm">
-              <q-btn no-caps label="Add" />
+              <q-btn no-caps label="Add" @click="isFormDialog = true" />
               <q-btn no-caps label="Report" />
             </div>
             <q-btn color="secondary" flat>
@@ -51,23 +51,44 @@
         </div>
       </div>
     </div>
+    <q-dialog
+      position="top"
+      transition-show="slide-up"
+      transition-hide="slide-down"
+      persistent
+      v-model="isFormDialog"
+    >
+      <AddProjectDialog />
+    </q-dialog>
   </div>
 </template>
 
 <script setup>
 // composables
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useAssetsStore } from "../store";
+import { useAssetsStore, useUsersStore } from "../store";
 import { getAuth, signOut } from "firebase/auth";
+
+// components
+import AddProjectDialog from "../components/AddProjectDialog.vue";
+import { firebaseAuth } from "src/boot/firebase";
+const userStore = useUsersStore();
 const assetsStore = useAssetsStore();
 const { getAssetsList, getAssetsById, getClaims } = assetsStore;
 const { assetsList } = storeToRefs(assetsStore);
+
 const router = useRouter();
+const { currentUser } = storeToRefs(userStore);
+const isFormDialog = ref(false);
 
 onMounted(async () => {
-  await getAssetsList();
+  await getAssetsList(
+    firebaseAuth.currentUser
+      ? firebaseAuth.currentUser.uid
+      : localStorage.getItem("uid")
+  );
 });
 
 const logout = async () => {

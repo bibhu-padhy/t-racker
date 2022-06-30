@@ -1,9 +1,9 @@
 import { reactive, ref } from "vue";
 import { getDocs, collection, addDoc } from "firebase/firestore";
-import { db } from "../boot/firebase";
+import { db, firebaseAuth } from "../boot/firebase";
 import { Loading } from "quasar";
 export const useAddProjectMethods = () => {
-  const collectionName = "projectList";
+  const collectionName = process.env.DEV ? "projectList" : "projectList-PROD";
   const projectsList = ref([]);
   const projectFormValue = reactive({
     name: "",
@@ -28,6 +28,7 @@ export const useAddProjectMethods = () => {
       projectsList.value = projectListRef.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
+        uid: firebaseAuth.currentUser.uid,
       }));
       Loading.hide();
     } catch (error) {

@@ -20,9 +20,9 @@
             <div>$120</div>
           </div>
         </q-card-section>
-        <q-card-section v-if="selectedAssets.claims">
+        <q-card-section v-if="claims">
           <div class="text-h6 text-blue">Claims</div>
-          <div v-for="(item, index) of selectedAssets.claims" :key="index">
+          <div v-for="(item, index) of claims" :key="index">
             Amount: {{ item.amount }}
           </div>
         </q-card-section>
@@ -47,7 +47,7 @@ import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
 import { ref } from "vue";
 const assetsStore = useAssetsStore();
-const { selectedAssets } = storeToRefs(assetsStore);
+const { selectedAssets, claims } = storeToRefs(assetsStore);
 const editDialog = ref(false);
 </script>
 

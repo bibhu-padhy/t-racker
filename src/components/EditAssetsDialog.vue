@@ -14,6 +14,7 @@
     </q-card-section>
     <q-card-section>
       <q-form @submit="handleSubmit">
+        <q-toggle v-model="selectedAssets.active" label="Active" />
         <q-input
           v-model="selectedAssets.name"
           class="q-mt-sm"
@@ -39,6 +40,7 @@
             type="submit"
             label="save"
             class="q-mt-sm bg-cyan-1 text-blue"
+            v-close-popup
           />
         </div>
       </q-form>

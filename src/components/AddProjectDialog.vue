@@ -22,7 +22,7 @@
         <q-btn
           v-close-popup
           label="Submit"
-          @click="projectSubmit"
+          @click="handleAddAssets"
           color="primary"
         />
       </q-card-actions>
@@ -30,7 +30,19 @@
   </div>
 </template>
 <script setup>
-import { useAddProjectMethods } from "../composables/useAddProjectMethods";
-const { projectFormValue, projectSubmit } = useAddProjectMethods();
+import { reactive } from "vue";
+import { useAssetsStore } from "../store";
+
+const { addAssets } = useAssetsStore();
+
+const projectFormValue = reactive({
+  name: "",
+  investment: "",
+});
+
+const handleAddAssets = async () => {
+  console.log(projectFormValue);
+ await addAssets(projectFormValue)
+};
 </script>
 <style lang=""></style>

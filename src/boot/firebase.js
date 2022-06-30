@@ -23,9 +23,9 @@ onAuthStateChanged(firebaseAuth, (user) => {
   const userStore = useUsersStore();
 
   if (user) {
-    console.log(user);
     Loading.show();
-    // userStore.setCurrentUser(user);
+    userStore.currentUser = user;
+    localStorage.setItem("uid", user.uid);
     Loading.hide();
   } else {
     userStore.$reset();
