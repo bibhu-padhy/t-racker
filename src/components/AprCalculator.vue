@@ -21,15 +21,16 @@
       </div>
     </div>
     <div class="text-h6 q-my-md">
-      Daily percentage: {{ dailyPercentageOnApr }}%
+      Daily percentage: {{ dailyPercentageOnApr.toFixed(2) }}%
     </div>
 
     <div
       class="text-h6 q-my-md"
       v-if="dailyPercentageOnApr > 0 && formValue.investment"
     >
-      Daily gain on {{ formValue.investment }} of {{ dailyPercentageOnApr }}% is
-      {{ dailyGain }}
+      Daily gain on {{ formValue.investment }} of
+      {{ dailyPercentageOnApr.toFixed(2) }}% is
+      {{ dailyGain.toFixed(2) }}
     </div>
     <div v-if="dailyPercentageOnApr > 0 && formValue.investment">
       <div class="row">
@@ -69,7 +70,7 @@
         >
           <div>
             Day-{{ index + 1 }} = {{ count.investment }} -------- Gain =
-            {{ count.dailyGain }}
+            {{ count.dailyGain.toFixed(2) }}
           </div>
         </div>
       </div>

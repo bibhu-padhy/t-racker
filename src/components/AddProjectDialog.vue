@@ -42,7 +42,7 @@ const projectFormValue = reactive({
 
 const handleAddAssets = async () => {
   console.log(projectFormValue);
- await addAssets(projectFormValue)
+  await addAssets(projectFormValue);
 };
 </script>
 <style lang=""></style>
