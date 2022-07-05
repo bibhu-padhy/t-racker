@@ -37,6 +37,12 @@
         />
         <div class="row justify-end">
           <q-btn
+            type="button"
+            label="Delete"
+            class="q-mt-sm q-mr-sm bg-red-6 text-grey-5"
+            @click="handleDelete"
+          />
+          <q-btn
             type="submit"
             label="save"
             class="q-mt-sm bg-cyan-1 text-blue"
@@ -52,8 +58,13 @@
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
 const assetsStore = useAssetsStore();
-const { saveClaims } = assetsStore;
+const { saveClaims, deleteAssetsList } = assetsStore;
 const { selectedAssets } = storeToRefs(assetsStore);
+
+const handleDelete = async () => {
+  const res = await deleteAssetsList(selectedAssets.value.id);
+  console.log(res);
+};
 
 const handleSubmit = async () => {
   const payload = {

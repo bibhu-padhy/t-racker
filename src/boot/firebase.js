@@ -28,6 +28,7 @@ onAuthStateChanged(firebaseAuth, (user) => {
     localStorage.setItem("uid", user.uid);
     Loading.hide();
   } else {
+    localStorage.removeItem("uid");
     userStore.$reset();
   }
 });

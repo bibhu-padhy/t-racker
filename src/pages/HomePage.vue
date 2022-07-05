@@ -3,7 +3,7 @@
     <div class="col-md-10 col-xs-12" style="border: 5px solid black">
       <div class="row" style="height: 90vh">
         <div
-          class="col-md-4 col-xs-12 q-px-md q-py-lg"
+          class="col-md-4 q-px-md q-py-lg"
           style="border-right: 1px solid black"
         >
           <div class="row justify-between items-center">

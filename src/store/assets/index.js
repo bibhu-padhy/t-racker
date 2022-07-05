@@ -3,11 +3,10 @@ import state from "./state";
 import {
   collection,
   addDoc,
-  doc,
   onSnapshot,
   query,
-  where,
   orderBy,
+  deleteDoc,
 } from "firebase/firestore";
 import { db, firebaseAuth } from "../../boot/firebase";
 import { Loading } from "quasar";
@@ -46,6 +45,20 @@ const useAssetsStore = defineStore("assets", {
         Loading.hide();
       }
     },
+    async deleteAssetsList(id) {
+      try {
+        Loading.show();
+        await deleteDoc(
+          collection(
+            db,
+            collectionName,
+            firebaseAuth.currentUser.uid + "/assetsList" + id
+          )
+        );
+        Loading.hide();
+      } catch (error) {}
+    },
+
     async getAssetsList(uid) {
       try {
         Loading.show({
@@ -124,6 +137,13 @@ const useAssetsStore = defineStore("assets", {
       } catch (error) {
         console.log(error.message);
         Loading.hide();
+      }
+    },
+  },
+  getters: {
+    showTotalClaims() {
+      if (this.claims) {
+        return this.claims.reduce((acc, current) => acc + current.amount, 0);
       }
     },
   },

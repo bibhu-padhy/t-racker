@@ -15,9 +15,11 @@
             <div class="label_width">Investment:</div>
             <div>${{ selectedAssets.investment }}</div>
           </div>
-          <div class="row q-mt-sm">
+          <div v-if="showTotalClaims" class="row q-mt-sm">
             <div class="label_width">Total Claims:</div>
-            <div>$120</div>
+            <div>
+              {{ showTotalClaims }}
+            </div>
           </div>
         </q-card-section>
         <q-card-section v-if="claims">
@@ -45,9 +47,9 @@
 import EditAssetsDialog from "../components/EditAssetsDialog.vue";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 const assetsStore = useAssetsStore();
-const { selectedAssets, claims } = storeToRefs(assetsStore);
+const { selectedAssets, claims, showTotalClaims } = storeToRefs(assetsStore);
 const editDialog = ref(false);
 </script>
 
