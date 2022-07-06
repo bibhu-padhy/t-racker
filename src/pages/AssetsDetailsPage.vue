@@ -17,15 +17,19 @@
           </div>
           <div v-if="showTotalClaims" class="row q-mt-sm">
             <div class="label_width">Total Claims:</div>
-            <div>
-              {{ showTotalClaims }}
-            </div>
+            <div>$ {{ showTotalClaims }}</div>
           </div>
         </q-card-section>
         <q-card-section v-if="claims">
-          <div class="text-h6 text-blue">Claims</div>
+          <div class="text-h6 text-blue text-weight-bolder">Claims</div>
+
           <div v-for="(item, index) of claims" :key="index">
-            Amount: {{ item.amount }}
+            <div class="row justify-between items-center">
+              <div class="col-3">$ {{ item.amount }}</div>
+              <div class="col-4">
+                {{ formateDate(item.createdAt) }}
+              </div>
+            </div>
           </div>
         </q-card-section>
       </q-card>
@@ -48,9 +52,13 @@ import EditAssetsDialog from "../components/EditAssetsDialog.vue";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
 import { computed, ref } from "vue";
+import { date } from "quasar";
 const assetsStore = useAssetsStore();
 const { selectedAssets, claims, showTotalClaims } = storeToRefs(assetsStore);
 const editDialog = ref(false);
+
+const formateDate = (timestamp) =>
+  date.formatDate(timestamp.toDate(), "dddd MM YY");
 </script>
 
 <style lang="scss" scoped>
