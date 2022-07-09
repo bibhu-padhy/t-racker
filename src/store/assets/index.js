@@ -7,6 +7,9 @@ import {
   query,
   orderBy,
   deleteDoc,
+  where,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
 import { db, firebaseAuth } from "../../boot/firebase";
 import { Loading } from "quasar";
@@ -45,7 +48,8 @@ const useAssetsStore = defineStore("assets", {
         Loading.hide();
       }
     },
-    async deleteAssetsList(id) {
+
+    async deleteAssets(id) {
       try {
         Loading.show();
         await deleteDoc(
@@ -71,7 +75,11 @@ const useAssetsStore = defineStore("assets", {
           collectionName,
           uid + "/assetsList"
         );
-        const q = query(collectionRef, orderBy("createdAt"));
+        const q = query(
+          collectionRef,
+          orderBy("updatedAt"),
+          where("active", "==", true)
+        );
         onSnapshot(q, (val) => {
           this.assetsList = val.docs.map((doc) => ({
             ...doc.data(),
@@ -82,6 +90,27 @@ const useAssetsStore = defineStore("assets", {
         Loading.hide();
       } catch (error) {
         console.log(error.message);
+        Loading.hide();
+      }
+    },
+
+    async updateAssets(assetsId, payload) {
+      try {
+        Loading.show();
+        console.log(payload);
+        const path =
+          collectionName +
+          "/" +
+          firebaseAuth.currentUser.uid +
+          "/assetsList/" +
+          assetsId;
+        console.log(path);
+        const docRef = doc(db, path);
+        console.log(docRef);
+        await updateDoc(docRef, payload);
+        console.log(res);
+        Loading.hide();
+      } catch (error) {
         Loading.hide();
       }
     },

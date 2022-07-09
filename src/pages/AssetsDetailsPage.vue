@@ -40,7 +40,6 @@
       position="top"
       transition-show="slide-up"
       transition-hide="slide-down"
-      persistent
     >
       <EditAssetsDialog />
     </q-dialog>

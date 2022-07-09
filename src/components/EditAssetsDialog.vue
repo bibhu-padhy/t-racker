@@ -14,7 +14,12 @@
     </q-card-section>
     <q-card-section>
       <q-form @submit="handleSubmit">
-        <q-toggle v-model="selectedAssets.active" label="Active" />
+        <q-toggle
+          v-close-popup
+          v-model="selectedAssets.active"
+          @update:model-value="handleActive"
+          label="Active"
+        />
         <q-input
           v-model="selectedAssets.name"
           class="q-mt-sm"
@@ -35,19 +40,15 @@
           label="Claim"
           type="number"
         />
-        <div class="row justify-end">
+        <div class="row justify-between items-center">
           <q-btn
+            icon="delete"
             type="button"
-            label="Delete"
-            class="q-mt-sm q-mr-sm bg-red-6 text-grey-5"
+            color="red"
+            flat
             @click="handleDelete"
           />
-          <q-btn
-            type="submit"
-            label="save"
-            class="q-mt-sm bg-cyan-1 text-blue"
-            v-close-popup
-          />
+          <q-btn icon="done" type="submit" flat color="primary" v-close-popup />
         </div>
       </q-form>
     </q-card-section>
@@ -57,13 +58,22 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 const assetsStore = useAssetsStore();
-const { saveClaims, deleteAssetsList } = assetsStore;
+const { saveClaims, deleteAssets, updateAssets } = assetsStore;
 const { selectedAssets } = storeToRefs(assetsStore);
 
 const handleDelete = async () => {
-  const res = await deleteAssetsList(selectedAssets.value.id);
-  console.log(res);
+  await deleteAssets(selectedAssets.value.id);
+};
+
+const handleActive = async () => {
+  const payload = {
+    active: selectedAssets.value.active,
+  };
+  await updateAssets(route.params.id, payload);
 };
 
 const handleSubmit = async () => {
