@@ -74,6 +74,7 @@ const handleSubmit = async () => {
     const payload = {
       name: selectedAssets.value.name,
       currentValue: selectedAssets.value.currentValue,
+      modifiedAt: new Date(),
     };
     await updateAssets(route.params.id, payload);
   }
