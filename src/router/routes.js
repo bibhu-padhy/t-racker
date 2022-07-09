@@ -14,11 +14,15 @@ const routes = [
           },
         ],
       },
-      { path: "", component: () => import("pages/IndexPage.vue") },
       {
-        path: "explore",
+        path: "/explore",
         name: "explore",
         component: () => import("pages/Explore.vue"),
+      },
+      {
+        path: "/report",
+        name: "report",
+        component: () => import("../pages/Report.vue"),
       },
     ],
   },
