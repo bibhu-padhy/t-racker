@@ -33,13 +33,6 @@
           label="Current Value"
           type="number"
         />
-        <q-input
-          v-model="selectedAssets.claim"
-          class="q-mt-sm"
-          outlined
-          label="Claim"
-          type="number"
-        />
         <div class="row justify-between items-center">
           <q-btn
             icon="delete"
@@ -62,7 +55,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const assetsStore = useAssetsStore();
-const { saveClaims, deleteAssets, updateAssets } = assetsStore;
+const { deleteAssets, updateAssets } = assetsStore;
 const { selectedAssets } = storeToRefs(assetsStore);
 
 const handleDelete = async () => {
@@ -77,11 +70,13 @@ const handleActive = async () => {
 };
 
 const handleSubmit = async () => {
-  const payload = {
-    amount: +selectedAssets.value.claim,
-    createdAt: new Date(),
-  };
-  await saveClaims(selectedAssets.value.id, payload);
+  if (selectedAssets.value.name && selectedAssets.value.currentValue) {
+    const payload = {
+      name: selectedAssets.value.name,
+      currentValue: selectedAssets.value.currentValue,
+    };
+    await updateAssets(route.params.id, payload);
+  }
 };
 </script>
 

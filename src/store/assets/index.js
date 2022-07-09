@@ -97,18 +97,14 @@ const useAssetsStore = defineStore("assets", {
     async updateAssets(assetsId, payload) {
       try {
         Loading.show();
-        console.log(payload);
         const path =
           collectionName +
           "/" +
           firebaseAuth.currentUser.uid +
           "/assetsList/" +
           assetsId;
-        console.log(path);
         const docRef = doc(db, path);
-        console.log(docRef);
         await updateDoc(docRef, payload);
-        console.log(res);
         Loading.hide();
       } catch (error) {
         Loading.hide();

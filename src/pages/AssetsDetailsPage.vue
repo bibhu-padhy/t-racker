@@ -21,7 +21,18 @@
           </div>
         </q-card-section>
         <q-card-section v-if="claims">
-          <div class="text-h6 text-blue text-weight-bolder">Claims</div>
+          <div class="row items-center">
+            <div class="text-h6 text-blue text-weight-bolder">Claims</div>
+            <q-input
+              v-model="claim"
+              class="q-ml-sm"
+              borderless
+              placeholder="Add Claims..."
+              type="number"
+              style="width: 100px"
+              @keyup.enter="handleSaveClaims"
+            />
+          </div>
 
           <div v-for="(item, index) of claims" :key="index">
             <div class="row items-center">
@@ -50,14 +61,25 @@
 import EditAssetsDialog from "../components/EditAssetsDialog.vue";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { date } from "quasar";
 const assetsStore = useAssetsStore();
+const { saveClaims } = assetsStore;
 const { selectedAssets, claims, showTotalClaims } = storeToRefs(assetsStore);
 const editDialog = ref(false);
 
 const formateDate = (timestamp) =>
   date.formatDate(timestamp.toDate(), "ddd MM YY");
+const claim = ref("");
+
+const handleSaveClaims = async (e) => {
+  const payload = {
+    amount: +claim.value,
+    createdAt: new Date(),
+  };
+  await saveClaims(selectedAssets.value.id, payload);
+  claim.value = "";
+};
 </script>
 
 <style lang="scss" scoped>
