@@ -20,7 +20,7 @@
             <div>${{ showTotalClaims }}</div>
           </div>
         </q-card-section>
-        <q-card-section v-if="claims">
+        <q-card-section>
           <div class="row items-center">
             <div class="text-h6 text-blue text-weight-bolder">Claims</div>
             <q-input
@@ -72,13 +72,15 @@ const formateDate = (timestamp) =>
   date.formatDate(timestamp.toDate(), "ddd MM YY");
 const claim = ref("");
 
-const handleSaveClaims = async (e) => {
-  const payload = {
-    amount: +claim.value,
-    createdAt: new Date(),
-  };
-  await saveClaims(selectedAssets.value.id, payload);
-  claim.value = "";
+const handleSaveClaims = async () => {
+  if (claim.value.length) {
+    const payload = {
+      amount: +claim.value,
+      createdAt: new Date(),
+    };
+    await saveClaims(selectedAssets.value.id, payload);
+    claim.value = "";
+  }
 };
 </script>
 
