@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="height: 100%;">
+  <div class="row" style="height: 100%">
     <div class="col-md-4 q-px-md q-py-lg" style="border-right: 1px solid black">
       <div class="row justify-between items-center">
         <div class="q-gutter-x-sm">
@@ -43,6 +43,9 @@
         >
           {{ item.name }}
         </div>
+        <div v-if="!assetsList" class="text-h6 text-secondary">
+          ☝️ Add assets
+        </div>
       </div>
     </div>
     <div class="col-md-8" style="border-left: 1px solid black">
@@ -82,11 +85,7 @@ const { currentUser } = storeToRefs(userStore);
 const isFormDialog = ref(false);
 
 onMounted(async () => {
-  await getAssetsList(
-    firebaseAuth.currentUser
-      ? firebaseAuth.currentUser.uid
-      : localStorage.getItem("uid")
-  );
+  await getAssetsList();
 });
 
 const logout = async () => {

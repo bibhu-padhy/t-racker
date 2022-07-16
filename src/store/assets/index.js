@@ -14,7 +14,12 @@ import {
 import { db, firebaseAuth } from "../../boot/firebase";
 import { Loading } from "quasar";
 
-const collectionName = process.env.DEV ? "assets" : "assets-PROD";
+const assetsCollectionName = () => {
+  const uid = firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
+  return process.env.DEV
+    ? `assets/${uid}/assetsList/`
+    : `assets-PROD//${uid}/assetsList/`;
+};
 
 const useAssetsStore = defineStore("assets", {
   state,
@@ -27,20 +32,13 @@ const useAssetsStore = defineStore("assets", {
           backgroundColor: "grey",
         });
 
-        await addDoc(
-          collection(
-            db,
-            collectionName,
-            firebaseAuth.currentUser.uid + "/assetsList"
-          ),
-          {
-            ...payload,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            currentValue: payload.investment,
-            active: true,
-          }
-        );
+        await addDoc(collection(db, assetsCollectionName()), {
+          ...payload,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          currentValue: payload.investment,
+          active: true,
+        });
         this.getAssetsList(firebaseAuth.currentUser.uid);
         Loading.hide();
       } catch (error) {
@@ -52,15 +50,13 @@ const useAssetsStore = defineStore("assets", {
     async deleteAssets(id) {
       try {
         Loading.show();
-        await deleteDoc(
-          collection(
-            db,
-            collectionName,
-            firebaseAuth.currentUser.uid + "/assetsList" + id
-          )
-        );
+        const docRef = doc(db, assetsCollectionName(), id);
+        await deleteDoc(docRef);
         Loading.hide();
-      } catch (error) {}
+      } catch (error) {
+        console.log(error.message);
+        Loading.hide();
+      }
     },
 
     async getAssetsList(uid) {
@@ -70,17 +66,17 @@ const useAssetsStore = defineStore("assets", {
           messageColor: "black",
           backgroundColor: "grey",
         });
-        const collectionRef = collection(
-          db,
-          collectionName,
-          uid + "/assetsList"
-        );
+        const collectionRef = collection(db, assetsCollectionName());
         const q = query(
           collectionRef,
           orderBy("updatedAt"),
           where("active", "==", true)
         );
         onSnapshot(q, (val) => {
+          if (val.empty) {
+            this.$patch({ assetsList: null });
+            return;
+          }
           this.assetsList = val.docs.map((doc) => ({
             ...doc.data(),
             id: doc.id,
@@ -89,7 +85,6 @@ const useAssetsStore = defineStore("assets", {
 
         Loading.hide();
       } catch (error) {
-        console.log(error.message);
         Loading.hide();
       }
     },
@@ -97,13 +92,7 @@ const useAssetsStore = defineStore("assets", {
     async updateAssets(assetsId, payload) {
       try {
         Loading.show();
-        const path =
-          collectionName +
-          "/" +
-          firebaseAuth.currentUser.uid +
-          "/assetsList/" +
-          assetsId;
-        const docRef = doc(db, path);
+        const docRef = doc(db, assetsCollectionName(), assetsId);
         await updateDoc(docRef, payload);
         Loading.hide();
       } catch (error) {
@@ -124,7 +113,7 @@ const useAssetsStore = defineStore("assets", {
         });
         const collectionRef = collection(
           db,
-          collectionName + "/" + firebaseAuth.currentUser.uid + "/assetsList",
+          assetsCollectionName(),
           `${id}/claims`
         );
         const q = query(collectionRef, orderBy("createdAt"));
@@ -137,7 +126,6 @@ const useAssetsStore = defineStore("assets", {
           Loading.hide();
         });
       } catch (error) {
-        console.log(error.message);
         Loading.hide();
       }
     },
@@ -150,17 +138,12 @@ const useAssetsStore = defineStore("assets", {
           backgroundColor: "grey",
         });
         await addDoc(
-          collection(
-            db,
-            collectionName + "/" + firebaseAuth.currentUser.uid + "/assetsList",
-            `${id}/claims`
-          ),
+          collection(db, assetsCollectionName(), `${id}/claims`),
           payload
         );
         await this.getClaims(id);
         Loading.hide();
       } catch (error) {
-        console.log(error.message);
         Loading.hide();
       }
     },

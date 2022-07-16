@@ -52,25 +52,34 @@
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <EditAssetsDialog />
+      <EditAssetsDialog @deleteAssetsTrue="handleDeleteAssets" />
     </q-dialog>
   </div>
 </template>
 
 <script setup>
 import EditAssetsDialog from "../components/EditAssetsDialog.vue";
+import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
 import { ref } from "vue";
 import { date } from "quasar";
+const router = useRouter();
 const assetsStore = useAssetsStore();
-const { saveClaims } = assetsStore;
+const { saveClaims, deleteAssets } = assetsStore;
 const { selectedAssets, claims, showTotalClaims } = storeToRefs(assetsStore);
+
 const editDialog = ref(false);
+const claim = ref("");
 
 const formateDate = (timestamp) =>
   date.formatDate(timestamp.toDate(), "ddd MM YY");
-const claim = ref("");
+
+const handleDeleteAssets = async (id) => {
+  deleteAssets(id);
+  router.back();
+  editDialog.value = false;
+};
 
 const handleSaveClaims = async () => {
   if (claim.value.length) {

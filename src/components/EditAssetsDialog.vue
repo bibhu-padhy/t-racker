@@ -51,15 +51,17 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const assetsStore = useAssetsStore();
-const { deleteAssets, updateAssets } = assetsStore;
+const { updateAssets } = assetsStore;
 const { selectedAssets } = storeToRefs(assetsStore);
+const emit = defineEmits(["deleteAssetsTrue"]);
+const router = useRouter();
 
 const handleDelete = async () => {
-  await deleteAssets(selectedAssets.value.id);
+  emit("deleteAssetsTrue", route.params.id);
 };
 
 const handleActive = async () => {
@@ -67,6 +69,7 @@ const handleActive = async () => {
     active: selectedAssets.value.active,
   };
   await updateAssets(route.params.id, payload);
+  router.back();
 };
 
 const handleSubmit = async () => {
