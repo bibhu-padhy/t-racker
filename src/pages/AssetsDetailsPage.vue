@@ -19,6 +19,15 @@
             <div class="label_width">Total Claims:</div>
             <div>${{ showTotalClaims }}</div>
           </div>
+          <div v-if="averageClaim" class="row q-mt-sm">
+            <div class="label_width">Average Claim:</div>
+            <div>${{ averageClaim }}</div>
+          </div>
+
+          <div v-if="highestClaim" class="row q-mt-sm">
+            <div class="label_width">Highest Claim:</div>
+            <div>${{ highestClaim }}</div>
+          </div>
         </q-card-section>
         <q-card-section>
           <div class="row items-center">
@@ -62,12 +71,13 @@ import EditAssetsDialog from "../components/EditAssetsDialog.vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { date } from "quasar";
 const router = useRouter();
 const assetsStore = useAssetsStore();
 const { saveClaims, deleteAssets } = assetsStore;
-const { selectedAssets, claims, showTotalClaims } = storeToRefs(assetsStore);
+const { selectedAssets, claims, showTotalClaims, averageClaim, highestClaim } =
+  storeToRefs(assetsStore);
 
 const editDialog = ref(false);
 const claim = ref("");

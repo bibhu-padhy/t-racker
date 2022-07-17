@@ -171,6 +171,21 @@ const useAssetsStore = defineStore("assets", {
         );
       }
     },
+    averageClaim() {
+      if (this.claims) {
+        return (this.showTotalClaims / this.claims.length).toFixed(1);
+      }
+    },
+    highestClaim() {
+      if (this.claims) {
+        return this.claims.reduce((acc, current) => {
+          if (acc < current.amount) {
+            acc = current.amount;
+          }
+          return acc;
+        }, 0);
+      }
+    },
   },
 });
 
