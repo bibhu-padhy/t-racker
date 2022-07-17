@@ -18,7 +18,7 @@ const assetsCollectionName = () => {
   const uid = firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
   return process.env.DEV
     ? `assets/${uid}/assetsList/`
-    : `assets-PROD//${uid}/assetsList/`;
+    : `assets-PROD/${uid}/assetsList/`;
 };
 
 const useAssetsStore = defineStore("assets", {
@@ -39,7 +39,7 @@ const useAssetsStore = defineStore("assets", {
           currentValue: payload.investment,
           active: true,
         });
-        this.getAssetsList(firebaseAuth.currentUser.uid);
+        await this.getAssetsList();
         Loading.hide();
       } catch (error) {
         console.log(error.message);
@@ -59,28 +59,33 @@ const useAssetsStore = defineStore("assets", {
       }
     },
 
-    async getAssetsList(uid) {
+    async getAssetsList() {
       try {
         Loading.show({
           message: "Fetching assets..",
           messageColor: "black",
           backgroundColor: "grey",
         });
+        this.$patch({ loading: true });
         const collectionRef = collection(db, assetsCollectionName());
         const q = query(
           collectionRef,
           orderBy("updatedAt"),
           where("active", "==", true)
         );
+        console.log("calling");
         onSnapshot(q, (val) => {
           if (val.empty) {
-            this.$patch({ assetsList: null });
+            this.$patch({ assetsList: null, loading: false });
             return;
           }
-          this.assetsList = val.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
+          this.$patch({
+            assetsList: val.docs.map((doc) => ({
+              ...doc.data(),
+              id: doc.id,
+            })),
+            loading: false,
+          });
         });
 
         Loading.hide();
@@ -152,6 +157,18 @@ const useAssetsStore = defineStore("assets", {
     showTotalClaims() {
       if (this.claims) {
         return this.claims.reduce((acc, current) => acc + current.amount, 0);
+      }
+    },
+    assetsLoadingState() {
+      return this.loading;
+    },
+
+    totalInvestment() {
+      if (this.assetsList) {
+        return this.assetsList.reduce(
+          (acc, current) => (acc += +current.investment),
+          0
+        );
       }
     },
   },

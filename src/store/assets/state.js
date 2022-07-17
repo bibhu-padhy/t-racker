@@ -3,5 +3,6 @@ export default () => {
     assetsList: null,
     selectedAssets: null,
     claims: null,
+    loading: false,
   };
 };

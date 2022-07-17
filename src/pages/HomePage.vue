@@ -2,17 +2,36 @@
   <div class="row" style="height: 100%">
     <div class="col-md-4 q-px-md q-py-lg" style="border-right: 1px solid black">
       <div class="row justify-between items-center">
-        <div class="q-gutter-x-sm">
-          <q-btn no-caps label="Add" @click="isFormDialog = true" />
+        <div class="q-gutter-x-sm row">
+          <q-btn
+            no-caps
+            label="Add"
+            @click="isFormDialog = true"
+            :loading="assetsLoadingState"
+          />
           <q-btn
             no-caps
             label="Report"
             @click="router.push({ name: 'report' })"
           />
+
+          <div
+            class="text-body2 text-weight-bold text-blue-grey-8 text-center q-ml-md"
+          >
+            <div class="">Investment</div>
+            <q-skeleton
+              v-if="!totalInvestment && assetsLoadingState"
+              type="text"
+            />
+            <div v-else>${{ totalInvestment }}</div>
+          </div>
         </div>
         <q-btn color="secondary" flat>
           <q-icon>
-            <q-avatar size="30px" icon="account_circle"> </q-avatar>
+            <div v-if="!currentUser">
+              <q-skeleton size="30px" type="QAvatar" />
+            </div>
+            <q-avatar v-else size="30px" icon="account_circle"> </q-avatar>
           </q-icon>
           <q-menu>
             <div class="row no-wrap q-pa-md">
@@ -78,7 +97,8 @@ import { firebaseAuth } from "src/boot/firebase";
 const userStore = useUsersStore();
 const assetsStore = useAssetsStore();
 const { getAssetsList, getAssetsById, getClaims } = assetsStore;
-const { assetsList } = storeToRefs(assetsStore);
+const { assetsList, totalInvestment, assetsLoadingState } =
+  storeToRefs(assetsStore);
 
 const router = useRouter();
 const { currentUser } = storeToRefs(userStore);
