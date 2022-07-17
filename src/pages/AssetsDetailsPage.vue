@@ -29,7 +29,7 @@
             <div>${{ highestClaim }}</div>
           </div>
         </q-card-section>
-        <q-card-section>
+        <q-card-section style="max-height: 350px; overflow-y: auto">
           <div class="row items-center">
             <div class="text-h6 text-blue text-weight-bolder">Claims</div>
             <q-input
