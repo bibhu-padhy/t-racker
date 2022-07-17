@@ -14,16 +14,18 @@
             label="Report"
             @click="router.push({ name: 'report' })"
           />
-
+          <q-skeleton
+            width="80px"
+            v-if="!totalInvestment && assetsLoadingState"
+            type="text"
+          />
           <div
+            v-if="totalInvestment"
             class="text-body2 text-weight-bold text-blue-grey-8 text-center q-ml-md"
           >
             <div class="">Investment</div>
-            <q-skeleton
-              v-if="!totalInvestment && assetsLoadingState"
-              type="text"
-            />
-            <div v-else>${{ totalInvestment }}</div>
+
+            <div>${{ totalInvestment }}</div>
           </div>
         </div>
         <q-btn color="secondary" flat>
@@ -31,7 +33,9 @@
             <div v-if="!currentUser">
               <q-skeleton size="30px" type="QAvatar" />
             </div>
-            <q-avatar v-else size="30px" icon="account_circle"> </q-avatar>
+            <q-avatar v-else size="30px">
+              <img :src="currentUser.photoURL" alt="" />
+            </q-avatar>
           </q-icon>
           <q-menu>
             <div class="row no-wrap q-pa-md">
