@@ -41,6 +41,13 @@
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
                 <q-list style="min-width: 100px" class="text-center">
+                  <q-item
+                    clickable
+                    v-close-popup
+                    @click="router.push({ name: 'explore' })"
+                  >
+                    <q-item-section>Explore</q-item-section>
+                  </q-item>
                   <q-item clickable v-close-popup @click="logout">
                     <q-item-section>Logout</q-item-section>
                   </q-item>

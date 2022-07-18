@@ -10,24 +10,32 @@
         </q-card-section>
 
         <q-separator />
-        <q-card-section class="text-body1 q-mt-md">
-          <div class="row">
-            <div class="label_width">Investment:</div>
-            <div>${{ selectedAssets.investment }}</div>
-          </div>
-          <div v-if="showTotalClaims" class="row q-mt-sm">
-            <div class="label_width">Total Claims:</div>
-            <div>${{ showTotalClaims }}</div>
-          </div>
-          <div v-if="averageClaim" class="row q-mt-sm">
-            <div class="label_width">Average Claim:</div>
-            <div>${{ averageClaim }}</div>
-          </div>
+        <q-card-section class="text-body1 q-mt-md row text-center q-gutter-sm">
+          <q-card>
+            <q-card-section>
+              <div class="label_width">Investment:</div>
+              <div>${{ selectedAssets.investment }}</div>
+            </q-card-section>
+          </q-card>
+          <q-card v-if="showTotalClaims">
+            <q-card-section>
+              <div class="label_width">Total Claims:</div>
+              <div>${{ showTotalClaims }}</div>
+            </q-card-section>
+          </q-card>
+          <q-card v-if="averageClaim">
+            <q-card-section>
+              <div class="label_width">Average Claim:</div>
+              <div>${{ averageClaim }}</div>
+            </q-card-section>
+          </q-card>
 
-          <div v-if="highestClaim" class="row q-mt-sm">
-            <div class="label_width">Highest Claim:</div>
-            <div>${{ highestClaim }}</div>
-          </div>
+          <q-card v-if="highestClaim">
+            <q-card-section>
+              <div class="label_width">Highest Claim:</div>
+              <div>${{ highestClaim }}</div>
+            </q-card-section>
+          </q-card>
         </q-card-section>
         <q-card-section style="max-height: 350px; overflow-y: auto">
           <div class="row items-center">
