@@ -10,7 +10,7 @@
         </q-card-section>
 
         <q-separator />
-        <q-card-section class="text-body1 q-mt-md row text-center q-gutter-sm">
+        <q-card-section class="text-body1 row text-center q-gutter-sm">
           <q-card>
             <q-card-section>
               <div class="label_width">Investment:</div>
