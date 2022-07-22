@@ -1,7 +1,10 @@
 <template>
   <div class="row" style="height: 100%">
-    <div class="col-md-4 q-px-md q-py-lg" style="border-right: 1px solid black">
-      <div class="row justify-between items-center">
+    <div
+      class="col-md-4 col-xs-12 q-px-md q-py-lg"
+      :style="!Screen.xs ? 'border-right: 1px solid black' : ''"
+    >
+      <div class="row justify-between items-center text-primary">
         <div class="q-gutter-x-sm row">
           <q-btn
             no-caps
@@ -41,9 +44,16 @@
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
                 <q-list style="min-width: 100px" class="text-center">
+                  <q-item>
+                    <q-toggle
+                      v-model="isDarkMode"
+                      @click="Dark.toggle()"
+                      :label="isDarkMode ? '☀️' : '🌑'"
+                    ></q-toggle>
+                  </q-item>
                   <q-item
                     clickable
-                    v-close-popup
+                    v-close-popup🌜
                     @click="router.push({ name: 'explore' })"
                   >
                     <q-item-section>Explore</q-item-section>
@@ -63,22 +73,23 @@
         </q-btn>
         <!-- <q-avatar text-color="secondary" icon="account_circle" /> -->
       </div>
-      <div class="q-mt-md">
-        <div
+      <div class="q-mt-md text-primary">
+        <q-card
           @click="showDetails(item)"
           v-for="(item, index) of assetsList"
           :key="index"
-          class="row items-center q-mb-sm q-pl-sm cursor-pointer"
-          style="border: 1px solid black; height: 50px; border-radius: 5px"
+          class="row items-center q-mb-sm cursor-pointer"
         >
-          {{ item.name }}
-        </div>
+          <q-card-section>
+            {{ item.name }}
+          </q-card-section>
+        </q-card>
         <div v-if="!assetsList" class="text-h6 text-secondary">
           ☝️ Add assets
         </div>
       </div>
     </div>
-    <div class="col-md-8" style="border-left: 1px solid black">
+    <div class="col-md-8" v-if="!Screen.xs">
       <router-view />
     </div>
   </div>
@@ -92,6 +103,15 @@
   >
     <AddProjectDialog />
   </q-dialog>
+  <q-dialog
+    position="top"
+    transition-show="slide-up"
+    transition-hide="slide-down"
+    persistent
+    v-model="isDetailsDialog"
+  >
+    <AssetsDetailsPage />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -101,19 +121,20 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAssetsStore, useUsersStore } from "../store";
 import { getAuth, signOut } from "firebase/auth";
-
+import { Screen, Dark } from "quasar";
 // components
 import AddProjectDialog from "../components/AddProjectDialog.vue";
-import { firebaseAuth } from "src/boot/firebase";
+import AssetsDetailsPage from "../pages/AssetsDetailsPage.vue";
 const userStore = useUsersStore();
 const assetsStore = useAssetsStore();
 const { getAssetsList, getAssetsById, getClaims } = assetsStore;
 const { assetsList, totalInvestment, assetsLoadingState } =
   storeToRefs(assetsStore);
-
+const isDarkMode = ref(Dark.mode);
 const router = useRouter();
 const { currentUser } = storeToRefs(userStore);
 const isFormDialog = ref(false);
+const isDetailsDialog = ref(false);
 
 onMounted(async () => {
   await getAssetsList();
@@ -126,9 +147,13 @@ const logout = async () => {
 };
 
 const showDetails = async (item) => {
-  router.push(`/dashboard/${item.id}`);
   getAssetsById(item.id);
   await getClaims(item.id);
+  if (Screen.xs) {
+    isDetailsDialog.value = true;
+    return;
+  }
+  router.push(`/dashboard/${item.id}`);
 };
 </script>
 

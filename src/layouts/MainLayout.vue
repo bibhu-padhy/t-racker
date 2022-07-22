@@ -1,21 +1,18 @@
 <template>
-  <q-layout class="row justify-center items-center" style="height: 100vh">
-    <q-page-container
-      style="border: 5px solid black; height: 90vh"
-      class="col-md-10 col-xs-12"
-    >
-      <router-view />
+  <q-layout
+    class="row"
+    :class="$q.screen.xs ? '' : 'justify-center items-center'"
+    style="height: 100vh"
+  >
+    <q-page-container class="col-md-10 col-xs-12">
+      <q-card :style="$q.screen.xs ? 'height: 100vh' : 'height: 90vh'">
+        <router-view />
+      </q-card>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-onMounted(() => {
-  router.replace({ path: "/dashboard", replace: "/" });
-});
+import { useQuasar } from "quasar";
+const $q = useQuasar();
 </script>

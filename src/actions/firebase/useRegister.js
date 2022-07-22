@@ -1,22 +1,20 @@
-import { useEmailRegister } from 'firebase-composables'
-import { useRouter } from 'vue-router'
+import { useEmailRegister } from "firebase-composables";
+import { useRouter } from "vue-router";
 
 export default () => {
-  const router = useRouter()
-  const emailRegisterService = useEmailRegister()
+  const router = useRouter();
+  const emailRegisterService = useEmailRegister();
 
-  async function onRegisterClicked () {
+  async function onRegisterClicked() {
     try {
-      await emailRegisterService.register()
-      router.push('/')
-    } catch (error) {
-
-    }
+      await emailRegisterService.register();
+      router.push("/");
+    } catch (error) {}
   }
 
   return {
     ...emailRegisterService,
     onRegisterClicked,
-    router
-  }
-}
+    router,
+  };
+};
