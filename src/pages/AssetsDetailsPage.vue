@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-ma-lg text-primary">
+  <q-card class="text-primary">
     <q-card-section class="row items-center justify-between">
       <div class="text-h6 text-uppercase">
         {{ selectedAssets?.name }}
