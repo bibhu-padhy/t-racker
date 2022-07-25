@@ -85,7 +85,7 @@ import EditAssetsDialog from "../components/EditAssetsDialog.vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { Screen } from "quasar";
 import { date } from "quasar";
 const router = useRouter();
@@ -111,8 +111,9 @@ const handleSaveClaims = async () => {
     const payload = {
       amount: +claim.value,
       createdAt: new Date(),
+      assetsId: selectedAssets.value.id,
     };
-    await saveClaims(selectedAssets.value.id, payload);
+    await saveClaims(payload);
     claim.value = "";
   }
 };

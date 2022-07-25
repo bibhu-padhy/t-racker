@@ -24,6 +24,11 @@ const routes = [
         name: "explore",
         component: () => import("pages/Explore.vue"),
       },
+      {
+        path: "/report",
+        name: "mobile-report",
+        component: () => import("../pages/ReportPage.vue"),
+      },
     ],
   },
   {

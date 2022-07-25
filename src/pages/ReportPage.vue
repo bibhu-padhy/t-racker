@@ -4,11 +4,28 @@
       {{ today }}
     </q-card-section>
     <q-separator />
-    <q-card-section class="text-primary row q-gutter-md">
-      <q-card>
+    <q-card-section class="text-primary row q-gutter-md text-center">
+      <q-card v-if="claims.length">
         <q-card-section>
           <div class="label_width">Total Claim:</div>
-          <div>$ 1200</div>
+          <div>$ {{ getTotalClaimAmount }}</div>
+        </q-card-section>
+      </q-card>
+      <q-card v-if="claims.length">
+        <q-card-section>
+          <div class="label_width">Highest Claim:</div>
+          <div>
+            on
+            {{ handleFormatDate(highestClaimDetails.createdAt, "MM/d") }} ${{
+              highestClaimDetails.amount
+            }}
+          </div>
+        </q-card-section>
+      </q-card>
+      <q-card v-if="averageClaim">
+        <q-card-section>
+          <div class="label_width">Average Claim:</div>
+          <div>$ {{ averageClaim }}</div>
         </q-card-section>
       </q-card>
     </q-card-section>
@@ -16,9 +33,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { date } from "quasar";
-const today = ref(date.formatDate(new Date(), "dddd-MM-YYYY"));
+import { useReportStore } from "../store";
+import { storeToRefs } from "pinia";
+
+const reportStore = useReportStore();
+const { getUsersTotalClaim } = reportStore;
+const { claims, getTotalClaimAmount, highestClaimDetails, averageClaim } =
+  storeToRefs(reportStore);
+
+const today = computed(() => handleFormatDate());
+
+const handleFormatDate = (d = new Date(), format = "dddd-MM-YYYY") =>
+  date.formatDate(new Date(), format);
+
+onMounted(async () => {
+  await getUsersTotalClaim();
+});
 </script>
 
 <style lang="scss" scoped></style>
