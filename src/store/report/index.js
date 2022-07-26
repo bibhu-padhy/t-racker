@@ -1,14 +1,9 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import {
   collection,
-  addDoc,
   onSnapshot,
   query,
   orderBy,
-  deleteDoc,
-  where,
-  updateDoc,
-  doc,
 } from "firebase/firestore";
 import { db, firebaseAuth } from "../../boot/firebase";
 import { Loading } from "quasar";
@@ -19,7 +14,7 @@ const getUID = () => {
 
 const claimCollectionPath = () => {
   const uid = firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
-  return process.env.DEV
+  return !process.env.DEV
     ? `claims/${getUID()}/claimsList`
     : `claims-PROD/${getUID()}/claimsList`;
 };

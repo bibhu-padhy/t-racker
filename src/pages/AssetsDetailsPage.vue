@@ -98,7 +98,7 @@ const editDialog = ref(false);
 const claim = ref("");
 
 const formateDate = (timestamp) =>
-  date.formatDate(timestamp.toDate(), "ddd MM YY");
+  date.formatDate(timestamp.toDate(), "ddd - MMMM - YY");
 
 const handleDeleteAssets = async (id) => {
   deleteAssets(id);

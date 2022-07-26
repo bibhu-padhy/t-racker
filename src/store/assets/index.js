@@ -19,13 +19,13 @@ const getUID = () => {
 };
 
 const assetsCollectionName = () => {
-  return process.env.DEV
+  return !process.env.DEV
     ? `assets/${getUID()}/assetsList/`
     : `assets-PROD/${getUID()}/assetsList/`;
 };
 
 const claimCollectionPath = () => {
-  return process.env.DEV
+  return !process.env.DEV
     ? `claims/${getUID()}/claimsList`
     : `claims-PROD/${getUID()}/claimsList`;
 };

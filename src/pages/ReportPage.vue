@@ -13,12 +13,11 @@
       </q-card>
       <q-card v-if="claims.length">
         <q-card-section>
-          <div class="label_width">Highest Claim:</div>
+          <div class="label_width">Highest Claim</div>
           <div>
-            on
-            {{ handleFormatDate(highestClaimDetails.createdAt, "MM/d") }} ${{
-              highestClaimDetails.amount
-            }}
+            ${{ highestClaimDetails.amount }} on
+            {{ handleFormatDate(highestClaimDetails.createdAt, "MM/d/YY") }}
+            <div>Assets: {{ highestClaimDetails.assetsName }}</div>
           </div>
         </q-card-section>
       </q-card>
