@@ -19,13 +19,13 @@ const getUID = () => {
 };
 
 const assetsCollectionName = () => {
-  return !process.env.DEV
+  return process.env.DEV
     ? `assets/${getUID()}/assetsList/`
     : `assets-PROD/${getUID()}/assetsList/`;
 };
 
 const claimCollectionPath = () => {
-  return !process.env.DEV
+  return process.env.DEV
     ? `claims/${getUID()}/claimsList`
     : `claims-PROD/${getUID()}/claimsList`;
 };
@@ -82,7 +82,6 @@ const useAssetsStore = defineStore("assets", {
           orderBy("updatedAt"),
           where("active", "==", true)
         );
-        console.log("calling");
         onSnapshot(q, (val) => {
           if (val.empty) {
             this.$patch({ assetsList: null, loading: false });

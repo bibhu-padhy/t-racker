@@ -1,10 +1,5 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db, firebaseAuth } from "../../boot/firebase";
 import { Loading } from "quasar";
 
@@ -13,8 +8,7 @@ const getUID = () => {
 };
 
 const claimCollectionPath = () => {
-  const uid = firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
-  return !process.env.DEV
+  return process.env.DEV
     ? `claims/${getUID()}/claimsList`
     : `claims-PROD/${getUID()}/claimsList`;
 };
@@ -40,7 +34,6 @@ const useReportStore = defineStore("report", {
         onSnapshot(q, (val) => {
           if (!val.empty) {
             const claims = val.docs.map((doc) => doc.data());
-            console.log(claims);
             this.$patch({ claims, error: null, loading: false });
           } else {
             console.log("no claim");
