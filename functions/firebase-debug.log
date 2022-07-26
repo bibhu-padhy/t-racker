@@ -1,0 +1,160 @@
+[debug] [2022-07-23T03:29:23.922Z] ----------------------------------------------------------------------
+[debug] [2022-07-23T03:29:23.924Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\bibhu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only functions
+[debug] [2022-07-23T03:29:23.924Z] CLI Version:   11.3.0
+[debug] [2022-07-23T03:29:23.924Z] Platform:      win32
+[debug] [2022-07-23T03:29:23.924Z] Node Version:  v16.13.1
+[debug] [2022-07-23T03:29:23.929Z] Time:          Sat Jul 23 2022 08:59:23 GMT+0530 (India Standard Time)
+[debug] [2022-07-23T03:29:23.929Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-07-23T03:29:23.984Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-07-23T03:29:23.985Z] > authorizing via signed-in user (bibhupadhy140@gmail.com)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2022-07-23T03:29:24.040Z] [hub] writing locator at C:\Users\bibhu\AppData\Local\Temp\hub-t-racker.json
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: auth, firestore, database, hosting, pubsub, storage {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mauth, firestore, database, hosting, pubsub, storage\u001b[22m"}}
+[info] +  functions: Using node@16 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Using node@16 from host."}}
+[debug] [2022-07-23T03:29:24.093Z] defaultcredentials: writing to file C:\Users\bibhu\AppData\Roaming\firebase\bibhupadhy140_gmail_com_application_default_credentials.json
+[debug] [2022-07-23T03:29:24.096Z] Setting GAC to C:\Users\bibhu\AppData\Roaming\firebase\bibhupadhy140_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\bibhu\\AppData\\Roaming\\firebase\\bibhupadhy140_gmail_com_application_default_credentials.json"}}
+[debug] [2022-07-23T03:29:24.097Z] > refreshing access token with scopes: []
+[debug] [2022-07-23T03:29:24.098Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-07-23T03:29:24.098Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-23T03:29:24.311Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-07-23T03:29:24.311Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-23T03:29:24.316Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/t-racker/adminSdkConfig [none]
+[debug] [2022-07-23T03:29:24.829Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/t-racker/adminSdkConfig 200
+[debug] [2022-07-23T03:29:24.830Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/t-racker/adminSdkConfig {"projectId":"t-racker","storageBucket":"t-racker.appspot.com","locationId":"us-central"}
+[debug] [2022-07-23T03:29:24.864Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-07-23T03:29:24.864Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-07-23T03:29:24.864Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\bibhu\\.cache\\firebase\\emulators\\ui-v1.8.1\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\bibhu\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.8.1\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2022-07-23T03:29:25.003Z] Web / API server started at localhost:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
+[info] i  functions: Watching "C:\Projects\quasar\t-racker\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Projects\\quasar\\t-racker\\functions\" for Cloud Functions..."}}
+[debug] [2022-07-23T03:29:25.151Z] Validating nodejs source
+[debug] [2022-07-23T03:29:28.406Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.2.0",
+    "firebase-functions": "^3.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  },
+  "private": true
+}
+[debug] [2022-07-23T03:29:28.406Z] Building nodejs source
+[debug] [2022-07-23T03:29:28.406Z] Analyzing nodejs backend spec
+[debug] [2022-07-23T03:29:28.407Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-07-23T03:29:28.618Z] Serving at port 9005
+
+[debug] [2022-07-23T03:29:28.687Z] Got response from /__/functions.yaml {"endpoints":{"getClaims":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"getClaims"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-07-23T03:29:28.692Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions[us-central1-getClaims]: http function initialized (http://localhost:5001/t-racker/us-central1/getClaims). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/t-racker/us-central1/getClaims)."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://localhost:4000                │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Functions │ localhost:5001 │ http://localhost:4000/functions │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at localhost:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2022-07-23T03:29:38.808Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-07-23T03:29:38.808Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-07-23T03:29:38.810Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-07-23T03:29:54.921Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-07-23T03:29:54.921Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-07-23T03:29:54.921Z] Accepted request POST /t-racker/us-central1/getClaims --> us-central1-getClaims
+[debug] [2022-07-23T03:29:54.924Z] Failed to validate key FIREBASE_API_KEY: Error: Key FIREBASE_API_KEY starts with a reserved prefix (X_GOOGLE_ FIREBASE_ EXT_)
+[debug] [2022-07-23T03:29:54.924Z] Failed to load local environment variablesFailed to load environment variables from .env. {"name":"FirebaseError","children":[{"key":"FIREBASE_API_KEY"}],"exit":2,"message":"Failed to load environment variables from .env.","status":500}
+[debug] [2022-07-23T03:29:54.935Z] [worker-pool] addWorker(us-central1-getClaims) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-getClaims)"}}
+[debug] [2022-07-23T03:29:54.935Z] [worker-pool] Adding worker with key us-central1-getClaims, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-getClaims, total=1"}}
+[debug] [2022-07-23T03:29:54.935Z] [worker-pool] submitWork(triggerId=us-central1-getClaims) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-getClaims)"}}
+[debug] [2022-07-23T03:29:54.936Z] [worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: BUSY"}}
+[debug] [2022-07-23T03:29:56.358Z] [runtime-status] [21328] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-admin\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-admin\\\\lib\\\\index.js\"}"}}
+[debug] [2022-07-23T03:29:56.359Z] [runtime-status] [21328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-functions\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\index.js\"}"}}
+[debug] [2022-07-23T03:29:56.359Z] [runtime-status] [21328] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-07-23T03:29:56.360Z] [runtime-status] [21328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-functions\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\index.js\"}"}}
+[debug] [2022-07-23T03:29:56.417Z] [runtime-status] [21328] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-07-23T03:29:56.417Z] [runtime-status] [21328] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-functions\\lib\\index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\index.js\"}}"}}
+[debug] [2022-07-23T03:29:56.418Z] [runtime-status] [21328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-functions\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\index.js\"}"}}
+[debug] [2022-07-23T03:29:56.419Z] [runtime-status] [21328] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-admin\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-admin\\\\lib\\\\index.js\"}"}}
+[debug] [2022-07-23T03:29:56.420Z] [runtime-status] [21328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-functions\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\index.js\"}"}}
+[debug] [2022-07-23T03:29:56.420Z] [runtime-status] [21328] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"C:\\Projects\\quasar\\t-racker\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\\\\node_modules\\\\firebase-admin\\\\lib\\\\index.js\"}}"}}
+[debug] [2022-07-23T03:29:56.421Z] [runtime-status] [21328] Functions runtime initialized. {"cwd":"C:\\Projects\\quasar\\t-racker\\functions","node_version":"16.13.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Functions runtime initialized. {\"cwd\":\"C:\\\\Projects\\\\quasar\\\\t-racker\\\\functions\",\"node_version\":\"16.13.1\"}"}}
+[debug] [2022-07-23T03:29:56.424Z] [runtime-status] [21328] Beginning invocation function getClaims! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Beginning invocation function getClaims!"}}
+[info] i  functions: Beginning execution of "getClaims" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"Beginning execution of \"getClaims\""}}
+[debug] [2022-07-23T03:29:56.425Z] [runtime-status] [21328] Running getClaims in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Running getClaims in signature http"}}
+[debug] [2022-07-23T03:29:56.429Z] [runtime-status] [21328] Attempting to listen to port: \\?\pipe\fire_emu_2b90b51ebb14606b {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Attempting to listen to port: \\\\?\\pipe\\fire_emu_2b90b51ebb14606b"}}
+[debug] [2022-07-23T03:29:56.480Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-07-23T03:29:56.481Z] [functions] Got req.url=/t-racker/us-central1/getClaims, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/t-racker/us-central1/getClaims, mapping to path=/"}}
+[debug] [2022-07-23T03:29:56.484Z] [runtime-status] [21328] Ephemeral server handling POST request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Ephemeral server handling POST request"}}
+[info] >  {"severity":"WARNING","message":"Request has incorrect Content-Type. "} {"user":{"severity":"WARNING","message":"Request has incorrect Content-Type. "},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"WARNING\",\"message\":\"Request has incorrect Content-Type. \"}"}}
+[info] >  {"severity":"ERROR","message":"Invalid request, unable to process."} {"user":{"severity":"ERROR","message":"Invalid request, unable to process."},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"ERROR\",\"message\":\"Invalid request, unable to process.\"}"}}
+[debug] [2022-07-23T03:29:56.490Z] [runtime-status] [21328] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"[runtime-status] [21328] Ephemeral server survived."}}
+[info] i  functions: Finished "getClaims" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getClaims"},"extension":{},"message":"Finished \"getClaims\" in ~1s"}}
+[debug] [2022-07-23T03:29:56.492Z] [worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: IDLE"}}
+[debug] [2022-07-23T03:29:56.492Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-07-23T03:35:39.086Z] File C:\Projects\quasar\t-racker\functions\src\index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Projects\\quasar\\t-racker\\functions\\src\\index.ts changed, reloading triggers"}}
+[debug] [2022-07-23T03:35:39.451Z] File C:\Projects\quasar\t-racker\functions\lib\index.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Projects\\quasar\\t-racker\\functions\\lib\\index.js.map changed, reloading triggers"}}
+[debug] [2022-07-23T03:35:39.451Z] File C:\Projects\quasar\t-racker\functions\lib\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Projects\\quasar\\t-racker\\functions\\lib\\index.js changed, reloading triggers"}}
+[debug] [2022-07-23T03:35:40.461Z] [worker-pool] Shutting down IDLE worker (us-central1-getClaims) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-getClaims)"}}
+[debug] [2022-07-23T03:35:40.461Z] [worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: FINISHING"}}
+[debug] [2022-07-23T03:35:40.463Z] Validating nodejs source
+[debug] [2022-07-23T03:35:48.042Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.2.0",
+    "firebase-functions": "^3.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  },
+  "private": true
+}
+[debug] [2022-07-23T03:35:48.042Z] Building nodejs source
+[debug] [2022-07-23T03:35:48.042Z] Analyzing nodejs backend spec
+[debug] [2022-07-23T03:35:48.043Z] [worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: exited"}}
+[debug] [2022-07-23T03:35:48.043Z] [worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-getClaims-7ab5edef-81f7-4a1c-8c2a-52205941de7d]: FINISHED"}}
+[debug] [2022-07-23T03:35:48.044Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-07-23T03:35:48.331Z] Serving at port 9005
+
+[debug] [2022-07-23T03:35:48.424Z] Got response from /__/functions.yaml {"endpoints":{"getClaims":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"getClaims"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-07-23T03:35:48.429Z] shutdown requested via /__/quitquitquit
+
+[debug] [2022-07-23T09:46:42.082Z] Received signal SIGHUP 1

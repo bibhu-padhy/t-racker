@@ -12,6 +12,11 @@ const routes = [
             path: "/dashboard/:id",
             component: () => import("../pages/AssetsDetailsPage.vue"),
           },
+          {
+            path: "/dashboard/report",
+            name: "report",
+            component: () => import("../pages/ReportPage.vue"),
+          },
         ],
       },
       {
@@ -21,8 +26,8 @@ const routes = [
       },
       {
         path: "/report",
-        name: "report",
-        component: () => import("../pages/Report.vue"),
+        name: "mobile-report",
+        component: () => import("../pages/ReportPage.vue"),
       },
     ],
   },

@@ -14,11 +14,20 @@ import {
 import { db, firebaseAuth } from "../../boot/firebase";
 import { Loading } from "quasar";
 
+const getUID = () => {
+  return firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
+};
+
 const assetsCollectionName = () => {
-  const uid = firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
-  return process.env.DEV
-    ? `assets/${uid}/assetsList/`
-    : `assets-PROD/${uid}/assetsList/`;
+  return !process.env.DEV
+    ? `assets/${getUID()}/assetsList/`
+    : `assets-PROD/${getUID()}/assetsList/`;
+};
+
+const claimCollectionPath = () => {
+  return !process.env.DEV
+    ? `claims/${getUID()}/claimsList`
+    : `claims-PROD/${getUID()}/claimsList`;
 };
 
 const useAssetsStore = defineStore("assets", {
@@ -109,19 +118,20 @@ const useAssetsStore = defineStore("assets", {
       this.selectedAssets = this.assetsList.find((item) => item.id === id);
     },
 
-    async getClaims(id) {
+    async getClaimById(id) {
       try {
         Loading.show({
           message: "Fetching Claims",
           messageColor: "black",
           backgroundColor: "grey",
         });
-        const collectionRef = collection(
-          db,
-          assetsCollectionName(),
-          `${id}/claims`
+        const collectionRef = collection(db, claimCollectionPath());
+
+        const q = query(
+          collectionRef,
+          orderBy("createdAt", "desc"),
+          where("assetsId", "==", id)
         );
-        const q = query(collectionRef, orderBy("createdAt"));
         onSnapshot(q, (val) => {
           if (val.empty) {
             this.claims = null;
@@ -135,18 +145,14 @@ const useAssetsStore = defineStore("assets", {
       }
     },
 
-    async saveClaims(id, payload) {
+    async saveClaims(payload) {
       try {
         Loading.show({
           message: "Saving..",
           messageColor: "black",
           backgroundColor: "grey",
         });
-        await addDoc(
-          collection(db, assetsCollectionName(), `${id}/claims`),
-          payload
-        );
-        await this.getClaims(id);
+        await addDoc(collection(db, claimCollectionPath()), payload);
         Loading.hide();
       } catch (error) {
         Loading.hide();

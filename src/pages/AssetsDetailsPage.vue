@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-ma-lg text-primary">
+  <q-card class="text-primary">
     <q-card-section class="row items-center justify-between">
       <div class="text-h6 text-uppercase">
         {{ selectedAssets?.name }}
@@ -85,7 +85,7 @@ import EditAssetsDialog from "../components/EditAssetsDialog.vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { Screen } from "quasar";
 import { date } from "quasar";
 const router = useRouter();
@@ -98,7 +98,7 @@ const editDialog = ref(false);
 const claim = ref("");
 
 const formateDate = (timestamp) =>
-  date.formatDate(timestamp.toDate(), "ddd MM YY");
+  date.formatDate(timestamp.toDate(), "ddd - MMMM - YY");
 
 const handleDeleteAssets = async (id) => {
   deleteAssets(id);
@@ -111,8 +111,9 @@ const handleSaveClaims = async () => {
     const payload = {
       amount: +claim.value,
       createdAt: new Date(),
+      assetsId: selectedAssets.value.id,
     };
-    await saveClaims(selectedAssets.value.id, payload);
+    await saveClaims(payload);
     claim.value = "";
   }
 };

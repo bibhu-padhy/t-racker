@@ -15,7 +15,9 @@
           <q-btn
             no-caps
             label="Report"
-            @click="router.push({ name: 'report' })"
+            @click="
+              router.push({ name: !Screen.xs ? 'report' : 'mobile-report' })
+            "
           />
           <q-skeleton
             width="80px"
@@ -127,7 +129,7 @@ import AddProjectDialog from "../components/AddProjectDialog.vue";
 import AssetsDetailsPage from "../pages/AssetsDetailsPage.vue";
 const userStore = useUsersStore();
 const assetsStore = useAssetsStore();
-const { getAssetsList, getAssetsById, getClaims } = assetsStore;
+const { getAssetsList, getAssetsById, getClaimById } = assetsStore;
 const { assetsList, totalInvestment, assetsLoadingState } =
   storeToRefs(assetsStore);
 const isDarkMode = ref(Dark.mode);
@@ -148,7 +150,7 @@ const logout = async () => {
 
 const showDetails = async (item) => {
   getAssetsById(item.id);
-  await getClaims(item.id);
+  await getClaimById(item.id);
   if (Screen.xs) {
     isDetailsDialog.value = true;
     return;
