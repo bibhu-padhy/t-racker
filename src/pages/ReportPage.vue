@@ -27,6 +27,12 @@
           <CurrencyWrapper :amount="averageClaim" />
         </q-card-section>
       </q-card>
+      <q-card v-if="todaysClaim">
+        <q-card-section>
+          <div class="label_width">Today's Claim:</div>
+          <CurrencyWrapper :amount="todaysClaim" />
+        </q-card-section>
+      </q-card>
     </q-card-section>
   </q-card>
 </template>
@@ -40,8 +46,13 @@ import CurrencyWrapper from "src/components/common/CurrencyWrapper.vue";
 
 const reportStore = useReportStore();
 const { getUsersTotalClaim } = reportStore;
-const { claims, getTotalClaimAmount, highestClaimDetails, averageClaim } =
-  storeToRefs(reportStore);
+const {
+  claims,
+  getTotalClaimAmount,
+  highestClaimDetails,
+  averageClaim,
+  todaysClaim,
+} = storeToRefs(reportStore);
 
 const today = computed(() => handleFormatDate());
 

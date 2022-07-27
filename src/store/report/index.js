@@ -50,7 +50,6 @@ const useReportStore = defineStore("report", {
     getTotalClaimAmount() {
       return this.claims.reduce((acc, cur) => (acc += cur.amount), 0);
     },
-
     highestClaimDetails() {
       return this.claims.reduce(
         (acc, cur) => {
@@ -63,8 +62,29 @@ const useReportStore = defineStore("report", {
         { amount: 0 }
       );
     },
+
     averageClaim() {
       return (this.getTotalClaimAmount / this.claims.length).toFixed(1);
+    },
+    todaysClaim() {
+      const validateDate = (d) => {
+        const fullDate = new Date(d);
+        const day = fullDate.getDate();
+        const month = fullDate.getMonth() + 1;
+        return { day, month };
+      };
+      return this.claims
+        .filter((claim) => {
+          if (
+            validateDate(new Date()).day ===
+              validateDate(claim.createdAt.toDate()).day &&
+            validateDate(new Date()).month ===
+              validateDate(claim.createdAt.toDate()).month
+          ) {
+            return claim;
+          }
+        })
+        .reduce((acc, crr) => (acc += crr.amount), 0);
     },
   },
 });
