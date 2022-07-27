@@ -161,7 +161,7 @@ const useAssetsStore = defineStore("assets", {
   getters: {
     showTotalClaims() {
       if (this.claims) {
-        return this.claims.reduce((acc, current) => acc + current.amount, 0);
+        return +this.claims.reduce((acc, current) => acc + current.amount, 0);
       }
     },
     assetsLoadingState() {
@@ -170,7 +170,7 @@ const useAssetsStore = defineStore("assets", {
 
     totalInvestment() {
       if (this.assetsList) {
-        return this.assetsList.reduce(
+        return +this.assetsList.reduce(
           (acc, current) => (acc += +current.investment),
           0
         );
@@ -178,12 +178,12 @@ const useAssetsStore = defineStore("assets", {
     },
     averageClaim() {
       if (this.claims) {
-        return (this.showTotalClaims / this.claims.length).toFixed(1);
+        return +(this.showTotalClaims / this.claims.length).toFixed(1);
       }
     },
     highestClaim() {
       if (this.claims) {
-        return this.claims.reduce((acc, current) => {
+        return +this.claims.reduce((acc, current) => {
           if (acc < current.amount) {
             acc = current.amount;
           }

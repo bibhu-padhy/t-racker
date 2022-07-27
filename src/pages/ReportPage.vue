@@ -8,14 +8,14 @@
       <q-card v-if="claims.length">
         <q-card-section>
           <div class="label_width">Total Claim:</div>
-          <div>$ {{ getTotalClaimAmount }}</div>
+          <CurrencyWrapper :amount="getTotalClaimAmount" />
         </q-card-section>
       </q-card>
       <q-card v-if="claims.length">
         <q-card-section>
           <div class="label_width">Highest Claim</div>
           <div>
-            ${{ highestClaimDetails.amount }} on
+            <CurrencyWrapper :amount="highestClaimDetails.amount" /> on
             {{ handleFormatDate(highestClaimDetails.createdAt, "MM/d/YY") }}
             <div>Assets: {{ highestClaimDetails.assetsName }}</div>
           </div>
@@ -24,7 +24,7 @@
       <q-card v-if="averageClaim">
         <q-card-section>
           <div class="label_width">Average Claim:</div>
-          <div>$ {{ averageClaim }}</div>
+          <CurrencyWrapper :amount="averageClaim" />
         </q-card-section>
       </q-card>
     </q-card-section>
@@ -36,6 +36,7 @@ import { computed, onMounted, ref } from "vue";
 import { date } from "quasar";
 import { useReportStore } from "../store";
 import { storeToRefs } from "pinia";
+import CurrencyWrapper from "src/components/common/CurrencyWrapper.vue";
 
 const reportStore = useReportStore();
 const { getUsersTotalClaim } = reportStore;

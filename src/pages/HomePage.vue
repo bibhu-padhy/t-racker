@@ -29,8 +29,7 @@
             class="text-body2 text-weight-bold text-blue-grey-8 text-center q-ml-md"
           >
             <div class="">Investment</div>
-
-            <div>${{ totalInvestment }}</div>
+            <CurrencyWrapper :amount="totalInvestment" />
           </div>
         </div>
         <q-btn color="secondary" flat>
@@ -51,6 +50,13 @@
                       v-model="isDarkMode"
                       @click="Dark.toggle()"
                       :label="isDarkMode ? '☀️' : '🌑'"
+                    ></q-toggle>
+                  </q-item>
+                  <q-item>
+                    <q-toggle
+                      v-model="showCurrency"
+                      @click="toggleCurrency(!showCurrency)"
+                      :label="showCurrency ? 'USD' : 'INR'"
                     ></q-toggle>
                   </q-item>
                   <q-item
@@ -121,14 +127,18 @@
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useAssetsStore, useUsersStore } from "../store";
+import { useAssetsStore, useUsersStore, useCommonStore } from "../store";
 import { getAuth, signOut } from "firebase/auth";
 import { Screen, Dark } from "quasar";
 // components
 import AddProjectDialog from "../components/AddProjectDialog.vue";
 import AssetsDetailsPage from "../pages/AssetsDetailsPage.vue";
+import CurrencyWrapper from "src/components/common/CurrencyWrapper.vue";
 const userStore = useUsersStore();
 const assetsStore = useAssetsStore();
+const commonStore = useCommonStore();
+const { toggleCurrency } = useCommonStore();
+const { showCurrency } = storeToRefs(commonStore);
 const { getAssetsList, getAssetsById, getClaimById } = assetsStore;
 const { assetsList, totalInvestment, assetsLoadingState } =
   storeToRefs(assetsStore);

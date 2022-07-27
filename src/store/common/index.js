@@ -5,9 +5,18 @@ const useCommonStore = defineStore("common", {
   state: () => {
     return {
       loading: null,
+      isUsd: true,
     };
   },
+  getters: {
+    showCurrency() {
+      return this.isUsd;
+    },
+  },
   actions: {
+    toggleCurrency(isUsd) {
+      this.$patch({ isUsd });
+    },
     showLoading(message, messageColor = "black", backgroundColor = "grey") {
       Loading.show({
         message,

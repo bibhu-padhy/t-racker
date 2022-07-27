@@ -23,26 +23,26 @@
       <q-card>
         <q-card-section>
           <div class="label_width">Investment:</div>
-          <div>${{ selectedAssets?.investment }}</div>
+          <CurrencyWrapper :amount="selectedAssets?.investment" />
         </q-card-section>
       </q-card>
       <q-card v-if="showTotalClaims">
         <q-card-section>
           <div class="label_width">Total Claims:</div>
-          <div>${{ showTotalClaims }}</div>
+          <CurrencyWrapper :amount="showTotalClaims" />
         </q-card-section>
       </q-card>
       <q-card v-if="averageClaim">
         <q-card-section>
           <div class="label_width">Average Claim:</div>
-          <div>${{ averageClaim }}</div>
+          <CurrencyWrapper :amount="averageClaim" />
         </q-card-section>
       </q-card>
 
       <q-card v-if="highestClaim">
         <q-card-section>
           <div class="label_width">Highest Claim:</div>
-          <div>${{ highestClaim }}</div>
+          <CurrencyWrapper :amount="highestClaim" />
         </q-card-section>
       </q-card>
     </q-card-section>
@@ -62,7 +62,9 @@
 
       <div v-for="(item, index) of claims" :key="index">
         <div class="row items-center">
-          <div class="col-3">${{ item.amount }}</div>
+          <div class="col-3">
+            <CurrencyWrapper :amount="item.amount" />
+          </div>
           <div class="text-grey-7">
             {{ formateDate(item.createdAt) }}
           </div>
@@ -82,6 +84,7 @@
 
 <script setup>
 import EditAssetsDialog from "../components/EditAssetsDialog.vue";
+import CurrencyWrapper from "../components/common/CurrencyWrapper.vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAssetsStore } from "../store";
