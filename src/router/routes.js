@@ -6,7 +6,7 @@ const routes = [
       {
         path: "/dashboard",
         name: "dashboard",
-        component: () => import("../pages/HomePage.vue"),
+        component: () => import("../pages/home/HomePage.vue"),
         children: [
           {
             path: "/dashboard/:id",

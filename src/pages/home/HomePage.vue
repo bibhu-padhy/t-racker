@@ -9,7 +9,7 @@
           <q-btn
             no-caps
             label="Add"
-            @click="isFormDialog = true"
+            @click="showAddAssetsDialog"
             :loading="assetsLoadingState"
           />
           <q-btn
@@ -79,12 +79,20 @@
             </div>
           </q-menu>
         </q-btn>
-        <!-- <q-avatar text-color="secondary" icon="account_circle" /> -->
+      </div>
+      <div
+        v-if="assetsTypeList.length > 0"
+        :style="Screen.xs ? 'width:100%' : 'width:40%'"
+      >
+        <AssetsTypeDropDown
+          @assetsType="handleAssetsType"
+          :options="assetsTypeList"
+        />
       </div>
       <div class="q-mt-md text-primary">
         <q-card
           @click="showDetails(item)"
-          v-for="(item, index) of assetsList"
+          v-for="(item, index) of showAssetsList"
           :key="index"
           class="row items-center q-mb-sm cursor-pointer"
         >
@@ -92,7 +100,7 @@
             {{ item.name }}
           </q-card-section>
         </q-card>
-        <div v-if="!assetsList" class="text-h6 text-secondary">
+        <div v-if="showAssetsList.length === 0" class="text-h6 text-secondary">
           ☝️ Add assets
         </div>
       </div>
@@ -109,7 +117,10 @@
     persistent
     v-model="isFormDialog"
   >
-    <AddProjectDialog />
+    <AddProjectDialog
+      :options="assetsTypeList"
+      @closeDialog="isFormDialog = !isFormDialog"
+    />
   </q-dialog>
   <q-dialog
     position="top"
@@ -122,35 +133,57 @@
   </q-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // composables
+import { useCommonMethods } from "../../composables";
+
 import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useAssetsStore, useUsersStore, useCommonStore } from "../store";
+import { useAssetsStore, useUsersStore, useCommonStore } from "../../store";
 import { getAuth, signOut } from "firebase/auth";
 import { Screen, Dark } from "quasar";
 // components
-import AddProjectDialog from "../components/AddProjectDialog.vue";
-import AssetsDetailsPage from "../pages/AssetsDetailsPage.vue";
+import AddProjectDialog from "./component/AddProjectDialog.vue";
+import AssetsDetailsPage from "../../pages/AssetsDetailsPage.vue";
 import CurrencyWrapper from "src/components/common/CurrencyWrapper.vue";
+import AssetsTypeDropDown from "./component/AssetsTypeDropDown.vue";
+import { AssetsType } from "src/composables/useCommonMethod";
+
 const userStore = useUsersStore();
 const assetsStore = useAssetsStore();
 const commonStore = useCommonStore();
 const { toggleCurrency } = useCommonStore();
 const { showCurrency } = storeToRefs(commonStore);
-const { getAssetsList, getAssetsById, getClaimById } = assetsStore;
-const { assetsList, totalInvestment, assetsLoadingState } =
+const { getAssetsList, getAssetsById, getClaimById, setAssetsType } =
+  assetsStore;
+const { totalInvestment, assetsLoadingState, showAssetsList } =
   storeToRefs(assetsStore);
 const isDarkMode = ref(Dark.mode);
 const router = useRouter();
 const { currentUser } = storeToRefs(userStore);
 const isFormDialog = ref(false);
 const isDetailsDialog = ref(false);
+const commonMethod = useCommonMethods();
+const { getAssetsType } = commonMethod;
 
+const assetsTypeList = ref<AssetsType[]>([]);
+
+const showAddAssetsDialog = async () => {
+  isFormDialog.value = true;
+};
 onMounted(async () => {
+  assetsTypeList.value = await getAssetsType();
   await getAssetsList();
 });
+
+const handleAssetsType = (type) => {
+  if (type) {
+    setAssetsType(type.id);
+  } else {
+    setAssetsType(null);
+  }
+};
 
 const logout = async () => {
   const auth = getAuth();

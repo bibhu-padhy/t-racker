@@ -4,7 +4,7 @@
 
 <script setup>
 import { storeToRefs } from "pinia";
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import { useCommonStore } from "../../store";
 const { showCurrency } = storeToRefs(useCommonStore());
 

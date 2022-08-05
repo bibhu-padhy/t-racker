@@ -1,5 +1,4 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import state from "./state";
 import {
   collection,
   addDoc,
@@ -11,13 +10,10 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import { db, firebaseAuth } from "../../boot/firebase";
+import { db, firebaseAuth, getUID } from "../../boot/firebase";
 import { Loading } from "quasar";
-
-const getUID = () => {
-  return firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
-};
-
+import { useInvestmentMethods } from "src/composables/useInvestmentMethods";
+const { addInvestment } = useInvestmentMethods();
 const assetsCollectionName = () => {
   return process.env.DEV
     ? `assets/${getUID()}/assetsList/`
@@ -31,8 +27,19 @@ const claimCollectionPath = () => {
 };
 
 const useAssetsStore = defineStore("assets", {
-  state,
+  state: () => {
+    return {
+      assetsList: [],
+      selectedAssets: null,
+      claims: null,
+      loading: false,
+      assetsType: null,
+    };
+  },
   actions: {
+    setAssetsType(type) {
+      this.assetsType = type;
+    },
     async addAssets(payload) {
       try {
         Loading.show({
@@ -41,14 +48,16 @@ const useAssetsStore = defineStore("assets", {
           backgroundColor: "grey",
         });
 
-        await addDoc(collection(db, assetsCollectionName()), {
-          ...payload,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          currentValue: payload.investment,
-          active: true,
+        const res = await addDoc(
+          collection(db, assetsCollectionName()),
+          payload
+        );
+        await addInvestment({
+          amount: payload.investment,
+          assetsId: res.id,
+          createdAt: payload.createdAt,
         });
-        await this.getAssetsList();
+        await await this.getAssetsList();
         Loading.hide();
       } catch (error) {
         console.log(error.message);
@@ -159,6 +168,13 @@ const useAssetsStore = defineStore("assets", {
     },
   },
   getters: {
+    showAssetsList() {
+      if (!this.assetsType) {
+        console.log(this.assetsType);
+        return this.assetsList;
+      }
+      return this.assetsList.filter((a) => a.type.includes(this.assetsType));
+    },
     showTotalClaims() {
       if (this.claims) {
         return +this.claims.reduce((acc, current) => acc + current.amount, 0);
@@ -192,6 +208,7 @@ const useAssetsStore = defineStore("assets", {
       }
     },
   },
+
 });
 
 if (import.meta.hot) {

@@ -19,6 +19,9 @@ export const app = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(app);
 export const db = getFirestore(app);
 
+export const getUID = () =>
+  firebaseAuth.currentUser?.uid || localStorage.getItem("uid");
+
 onAuthStateChanged(firebaseAuth, (user) => {
   const userStore = useUsersStore();
 
