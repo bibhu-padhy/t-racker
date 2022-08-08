@@ -15,7 +15,7 @@ import { Loading } from "quasar";
 import { useInvestmentMethods } from "src/composables/useInvestmentMethods";
 const { addInvestment } = useInvestmentMethods();
 const assetsCollectionName = () => {
-  return !process.env.DEV
+  return process.env.DEV
     ? `assets/${getUID()}/assetsList/`
     : `assets-PROD/${getUID()}/assetsList/`;
 };
