@@ -80,10 +80,7 @@
           </q-menu>
         </q-btn>
       </div>
-      <div
-        v-if="assetsTypeList.length > 0"
-        :style="Screen.xs ? 'width:100%' : 'width:40%'"
-      >
+      <div :style="Screen.xs ? 'width:100%' : 'width:40%'">
         <AssetsTypeDropDown
           @assetsType="handleAssetsType"
           :options="assetsTypeList"
@@ -100,7 +97,7 @@
             {{ item.name }}
           </q-card-section>
         </q-card>
-        <div v-if="showAssetsList.length === 0" class="text-h6 text-secondary">
+        <div v-if="!showAssetsList" class="text-h6 text-secondary">
           ☝️ Add assets
         </div>
       </div>
