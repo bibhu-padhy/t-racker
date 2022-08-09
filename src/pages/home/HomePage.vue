@@ -89,7 +89,7 @@
       <div class="q-mt-md text-primary">
         <q-card
           @click="showDetails(item)"
-          v-for="(item, index) of showAssetsList"
+          v-for="(item, index) of assetsList"
           :key="index"
           class="row items-center q-mb-sm cursor-pointer"
         >
@@ -97,7 +97,7 @@
             {{ item.name }}
           </q-card-section>
         </q-card>
-        <div v-if="!showAssetsList" class="text-h6 text-secondary">
+        <div v-if="!assetsList" class="text-h6 text-secondary">
           ☝️ Add assets
         </div>
       </div>
@@ -154,7 +154,7 @@ const { toggleCurrency } = useCommonStore();
 const { showCurrency } = storeToRefs(commonStore);
 const { getAssetsList, getAssetsById, getClaimById, setAssetsType } =
   assetsStore;
-const { totalInvestment, assetsLoadingState, showAssetsList } =
+const { totalInvestment, assetsLoadingState, showAssetsList, assetsList } =
   storeToRefs(assetsStore);
 const isDarkMode = ref(Dark.mode);
 const router = useRouter();
