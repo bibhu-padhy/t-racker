@@ -32,7 +32,7 @@ const useAssetsStore = defineStore("assets", {
       assetsList: [],
       selectedAssets: null,
       claims: null,
-      loading: false,
+      loading: true,
       assetsType: null,
     };
   },
@@ -172,9 +172,6 @@ const useAssetsStore = defineStore("assets", {
       if (!this.assetsType) {
         return this.assetsList;
       }
-      console.log(this.assetsType);
-      console.log(this.assetsList);
-
       return this.assetsList.filter((a) => a.type.includes(this.assetsType));
     },
     showTotalClaims() {

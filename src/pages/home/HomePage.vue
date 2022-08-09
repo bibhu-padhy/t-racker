@@ -87,18 +87,23 @@
         />
       </div>
       <div class="q-mt-md text-primary">
-        <q-card
-          @click="showDetails(item)"
-          v-for="(item, index) of assetsList"
-          :key="index"
-          class="row items-center q-mb-sm cursor-pointer"
+        <div
+          v-if="showAssetsList.length === 0 && !loading"
+          class="text-h6 text-secondary"
         >
-          <q-card-section>
-            {{ item.name }}
-          </q-card-section>
-        </q-card>
-        <div v-if="!assetsList" class="text-h6 text-secondary">
           ☝️ Add assets
+        </div>
+        <div v-else>
+          <q-card
+            @click="showDetails(item)"
+            v-for="(item, index) of showAssetsList"
+            :key="index"
+            class="row items-center q-mb-sm cursor-pointer"
+          >
+            <q-card-section>
+              {{ item.name }}
+            </q-card-section>
+          </q-card>
         </div>
       </div>
     </div>
@@ -154,7 +159,7 @@ const { toggleCurrency } = useCommonStore();
 const { showCurrency } = storeToRefs(commonStore);
 const { getAssetsList, getAssetsById, getClaimById, setAssetsType } =
   assetsStore;
-const { totalInvestment, assetsLoadingState, showAssetsList, assetsList } =
+const { totalInvestment, assetsLoadingState, showAssetsList, loading } =
   storeToRefs(assetsStore);
 const isDarkMode = ref(Dark.mode);
 const router = useRouter();
