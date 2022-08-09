@@ -93,7 +93,7 @@ const useAssetsStore = defineStore("assets", {
         );
         onSnapshot(q, (val) => {
           if (val.empty) {
-            this.$patch({ assetsList: null, loading: false });
+            this.$patch({ assetsList: [], loading: false });
             return;
           }
           this.$patch({
@@ -172,6 +172,9 @@ const useAssetsStore = defineStore("assets", {
       if (!this.assetsType) {
         return this.assetsList;
       }
+      console.log(this.assetsType);
+      console.log(this.assetsList);
+
       return this.assetsList.filter((a) => a.type.includes(this.assetsType));
     },
     showTotalClaims() {
