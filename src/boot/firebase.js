@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const firebaseAuth = getAuth(app);
+export const firebaseAuth = getAuth();
 export const db = getFirestore(app);
 
 export const getUID = () =>
@@ -28,10 +28,8 @@ onAuthStateChanged(firebaseAuth, (user) => {
   if (user) {
     Loading.show();
     userStore.currentUser = user;
-    localStorage.setItem("uid", user.uid);
     Loading.hide();
   } else {
-    localStorage.removeItem("uid");
     userStore.$reset();
   }
 });

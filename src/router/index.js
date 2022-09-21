@@ -33,14 +33,23 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  Router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth && !firebaseAuth.currentUser) {
-      next({ name: "auth" });
-      return
+  Router.beforeEach(async (to, from, next) => {
+
+    const getUser = () => {
+      return new Promise((resolve, reject) => {
+        const unsubscribe = firebaseAuth.onAuthStateChanged(user => {
+          unsubscribe();
+          resolve(user);
+        }, reject);
+      })
+    };
+    if (to.matched.some(r => r.meta?.requiresAuth) && !await getUser()) {
+      next('/auth')
     } else {
-      next();
+      next()
     }
   });
+
 
   return Router;
 });
